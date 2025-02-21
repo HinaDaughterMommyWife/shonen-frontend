@@ -1,6 +1,6 @@
 'use client';
 
-import { EmoteChannel, EMOTES_URL } from '@/common/emotes';
+/* import { EmoteChannel, EMOTES_URL } from '@/common/emotes';
 
 // Interfaz del diccionario de emotes
 interface Emote {
@@ -32,7 +32,6 @@ const emotes: EmoteDictionary = {
 };
 
 const EmoteText: React.FC<{ text: string }> = ({ text }) => {
-  // Expresión regular para detectar emotes en el texto
   const emoteRegex = /:([\w\d]+):/g;
 
   const parsedText = text.split(emoteRegex).map((part, index) => {
@@ -70,4 +69,4 @@ const EmoteText: React.FC<{ text: string }> = ({ text }) => {
   return <p className="emote-text">{parsedText}</p>;
 };
 
-export default EmoteText;
+export default EmoteText; */

@@ -18,8 +18,12 @@ export default function SimpleStats({ stats }: SimpleStatsProps) {
     <div className="flex justify-center pt-2xlarge flex-col items-center">
       <div className="text-center w-full max-w-lg mb-4">
         <div className="grid grid-cols-2 text-lg font-bold">
-          <div className="text-blue-500">Equipo Azul</div>
-          <div className="text-red-500">Equipo Rojo</div>
+          <div className="text-blue-500">
+            Equipo Azul - {teamBlue.reduce((acc, curr) => acc + curr.score, 0)}
+          </div>
+          <div className="text-red-500">
+            Equipo Rojo - {teamRed.reduce((acc, curr) => acc + curr.score, 0)}
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-[1fr_2px_1fr] gap-4 border-t border-gray-300 w-full max-w-lg text-center">

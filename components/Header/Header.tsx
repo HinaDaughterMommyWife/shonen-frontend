@@ -43,10 +43,14 @@ export default function Header() {
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center">
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            El Shonen Semanal ∙ beta
+            El Shonen Semanal Beta - Rebuild 3.0 + 1.0 (358/2 Dias)
           </h2>
           <span className="text-sm text-gray-500/75">
-            Descansa en paz Robraas <span className="text-gray-500 font-bold">✟🕊️</span>
+            <span className="line-through">
+              {' '}
+              Descansa en paz Robraas <span className="text-gray-500 font-bold">✟🕊️</span>
+            </span>{' '}
+            El mamaguebo volvio
           </span>
         </div>
       </header>

@@ -71,3 +71,56 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.scene {
+  width: 240px;
+  height: 240px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cube {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spin-loop 6s infinite linear;
+}
+
+.cube-face {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: rgb(0, 0, 0);
+}
+
+/* Ajuste de profundidad (mitad del tamaño del cubo) */
+.front {
+  transform: rotateY(0deg) translateZ(120px);
+}
+.back {
+  transform: rotateY(180deg) translateZ(120px);
+}
+.left {
+  transform: rotateY(-90deg) translateZ(120px);
+}
+.right {
+  transform: rotateY(90deg) translateZ(120px);
+}
+.top {
+  transform: rotateX(90deg) translateZ(120px);
+}
+.bottom {
+  transform: rotateX(-90deg) translateZ(120px);
+}
+
+/* Animación con velocidad uniforme */
+@keyframes spin-loop {
+  from {
+    transform: rotate3d(1, 1, 1, 0deg);
+  }
+  to {
+    transform: rotate3d(1, 1, 1, 360deg);
+  }
+}

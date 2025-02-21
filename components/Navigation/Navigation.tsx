@@ -1,17 +1,14 @@
 'use client';
 
 import { getSectionData } from '@/common';
-import EmoteText from '@/lib/emote';
 import { Section, useSectionStore } from '@/store';
 import { useEffect } from 'react';
 
 export default function Navigation() {
   const { section, setSection } = useSectionStore();
 
-  useEffect(() => {}, []);
-
   return (
-    <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
+    <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-6xlarge">
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex gap-2xlarge justify-center">
           {Object.values(Section).map((item) => (

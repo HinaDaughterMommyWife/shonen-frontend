@@ -10,15 +10,15 @@ export default {
 	theme: {
 		extend: {
 			spacing: {
-				"small": "8px",    // Pequeño
-				"medium": "16px",   // Mediano
-				"large": "24px",    // Grande
-				"xlarge": "32px",   // Extra grande
-				"2xlarge": "40px",  // Doble extra grande
-				"3xlarge": "48px",  // Triple extra grande
-				"4xlarge": "64px",  // Cuádruple extra grande
-				"5xlarge": "80px",  // Quíntuple extra grande
-				"6xlarge": "96px"   // Séxtuple extra grande
+				"small": "8px",
+				"medium": "16px",
+				"large": "24px",
+				"xlarge": "32px",
+				"2xlarge": "40px",
+				"3xlarge": "48px",
+				"4xlarge": "64px",
+				"5xlarge": "80px",
+				"6xlarge": "96px"
 			},
 			colors: {
 				background: 'hsl(var(--background))',
@@ -67,9 +67,18 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
-			}
+			},
+			keyframes: {
+				'invert-wave': {
+					'0%': { filter: 'invert(1)' },
+					'12.5%': { filter: 'invert(0)' },
+					'100%': { filter: 'invert(0)' },
+				},
+			},
+			animation: {
+				'invert-wave': 'invert-wave 8s linear infinite',
+			},
 		}
 	},
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;

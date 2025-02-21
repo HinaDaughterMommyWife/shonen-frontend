@@ -22,18 +22,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  /* const dataEmotes = await fetch('/public/emote-data.json').then((response) => response.json());
-
-  const staticEmotes = Object.values(EmoteChannel)
-    .map((channel) => dataEmotes[channel].static)
-    .flat();
-  const animatedEmotes = Object.values(EmoteChannel)
-    .map((channel) => dataEmotes[channel].animated)
-    .flat(); */
+  const bodyStyles =
+    '[scrollbar-gutter:stable] [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:my-3 [&::-webkit-scrollbar]:absolute [&::-webkit-scrollbar]:w-[6px]';
 
   return (
     <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased ${bodyStyles}`}>
+        {children}
+      </body>
     </html>
   );
 }
