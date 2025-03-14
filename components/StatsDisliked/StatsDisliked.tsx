@@ -1,14 +1,16 @@
 'use client';
-import { generateDescendingScores, getTotalScore } from '@/lib/random';
-import StatItem from './StatItem';
+import { getTotalScore } from '@/lib/random';
 import { TabsTrigger, Tabs, TabsList, TabsContent } from '../ui/tabs';
 import { useEffect, useState } from 'react';
 import { ViewType } from '@/store/stats';
 import SimpleStats from '../SimpleStats';
 import { MANGAS } from '@/common/mangas';
 import { useSurveyStore } from '@/store';
+import { StatItem } from '../StatItem';
+import { reorderScores } from '@/lib/utils';
 
 interface StatItemProps {
+  id: string;
   title: string;
   avatar: string;
   score: number;
@@ -25,6 +27,7 @@ export default function StatsDisliked() {
 
     Object.keys(survey.least_favorite_chapters).forEach((key) => {
       data.push({
+        id: MANGAS[key].id,
         title: MANGAS[key].title,
         avatar: MANGAS[key].avatar,
         score: survey.least_favorite_chapters[key],
@@ -37,6 +40,8 @@ export default function StatsDisliked() {
     setStats(sortData);
     setTotalScore(getTotalScore(data.map((item) => item.score)));
   }, [survey]);
+
+  const positionScore = reorderScores(survey.least_favorite_chapters);
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
@@ -58,6 +63,7 @@ export default function StatsDisliked() {
             <div className="flex flex-col gap-large pt-2xlarge">
               {stats.map((item, index) => (
                 <StatItem
+                  id={item.id}
                   key={index + '-stats'}
                   title={item.title}
                   value={item.score}
@@ -65,6 +71,7 @@ export default function StatsDisliked() {
                   icon={item.avatar}
                   index={index}
                   team={item.team}
+                  position={positionScore[item.id]}
                 />
               ))}
             </div>

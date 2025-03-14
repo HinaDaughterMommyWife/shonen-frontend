@@ -1,15 +1,18 @@
 'use client';
 
-import { generateDescendingScores, getTotalScore } from '@/lib/random';
-import StatItem from './StatItem';
-import { useEffect, useState } from 'react';
+import { getTotalScore } from '@/lib/random';
+import { useMemo } from 'react';
 import SimpleStats from '../SimpleStats';
 import { TabsTrigger, Tabs, TabsList, TabsContent } from '../ui/tabs';
 import { ViewType } from '@/store/stats';
 import { useSurveyStore } from '@/store';
 import { MANGAS } from '@/common/mangas';
+import { StatItem } from '../StatItem';
+import { reorderScores } from '@/lib/utils';
+import WavyText from '../ui/wobble';
 
 interface StatItemProps {
+  id: string;
   title: string;
   avatar: string;
   score: number;
@@ -17,27 +20,23 @@ interface StatItemProps {
 }
 
 export default function StatsLiked() {
-  const [stats, setStats] = useState<Array<StatItemProps>>([]);
-  const [totalScore, setTotalScore] = useState<number>(0);
   const { survey } = useSurveyStore();
 
-  useEffect(() => {
-    const data: Array<StatItemProps> = [];
+  const stats = useMemo(() => {
+    const data: Array<StatItemProps> = Object.keys(survey.favorite_chapters).map((key) => ({
+      id: MANGAS[key].id,
+      title: MANGAS[key].title,
+      avatar: MANGAS[key].avatar,
+      score: survey.favorite_chapters[key],
+      team: MANGAS[key].team,
+    }));
 
-    Object.keys(survey.favorite_chapters).forEach((key) => {
-      data.push({
-        title: MANGAS[key].title,
-        avatar: MANGAS[key].avatar,
-        score: survey.favorite_chapters[key],
-        team: MANGAS[key].team,
-      });
-    });
-
-    const sortData = data.sort((a, b) => b.score - a.score);
-
-    setStats(sortData);
-    setTotalScore(getTotalScore(data.map((item) => item.score)));
+    return data.sort((a, b) => b.score - a.score);
   }, [survey]);
+
+  const totalScore = useMemo(() => getTotalScore(stats.map((item) => item.score)), [stats]);
+
+  const positionScore = reorderScores(survey.favorite_chapters);
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
@@ -52,15 +51,11 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-4xlarge text-sm text-gray-500/75">
           <span>
-            Nota 1: Esto es una prueba de concepto, la version final estara en 3 o 4 semanas (espero
-            que menos xd)
-          </span>
-          <span>
-            Nota 2: Se esta trabajando en una escaneo automatico de los mangas publicados que
+            Nota 1: Se esta trabajando en un chequeo automatico de los mangas publicados que
             participan del shonen semanal (revision automatica si X manga ha publicado un capitulo)
           </span>
           <span>
-            Nota 3: Se esta trabajando en la posibilidad de que la gente pueda poner
+            Nota 2: Se esta trabajando en la posibilidad de que la gente pueda poner
             <span className="font-bold text-purple-700"> emotes de Twitch</span> de los canales:
             [darkrai, perico, emotes nativos de twitch, etc] en los comentarios (incluyendo los
             animados) (si al sapoperro no le gusta la idea, se descarta xd) (se espera comentarios
@@ -79,7 +74,7 @@ export default function StatsLiked() {
               target="_blank"
               className="underline"
             >
-              Nota 4: Mesugakis 😭💢 (link)
+              Nota 3: Mesugakis 😭💢 (link)
             </a>
           </span>
           <span>- GuibelOrgulloPeruano</span>
@@ -89,10 +84,14 @@ export default function StatsLiked() {
             <TabsTrigger value={ViewType.BAR}>Barras</TabsTrigger>
             <TabsTrigger value={ViewType.SIMPLE}>Simple</TabsTrigger>
           </TabsList>
+          <div className="flex flex-col gap-medium pt-2xlarge text-center">
+            <WavyText text="Nueva Feature, Comparacion de Puntajes Previos" />
+          </div>
           <TabsContent value={ViewType.BAR}>
             <div className="flex flex-col gap-large pt-2xlarge">
               {stats.map((item, index) => (
                 <StatItem
+                  id={item.id}
                   key={index + '-stats'}
                   title={item.title}
                   value={item.score}
@@ -100,6 +99,7 @@ export default function StatsLiked() {
                   icon={item.avatar}
                   index={index}
                   team={item.team}
+                  position={positionScore[item.id]}
                 />
               ))}
             </div>

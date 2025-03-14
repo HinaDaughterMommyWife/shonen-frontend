@@ -2,18 +2,29 @@ import { URLS } from '@/common';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import TopWindow from '@/components/TopWindow';
+import { HistoricalResponse } from '@/store/historical';
 import { SurveyResponse } from '@/store/survey';
 
 export default async function Home() {
-  let data: SurveyResponse;
+  let dataSurvey: SurveyResponse;
   let statusData: number;
 
+  let dataHistorical: HistoricalResponse;
+
   try {
-    const res = await fetch(URLS.API + '/lastKey', { next: { revalidate: 300 } });
-    data = await res.json();
-    statusData = res.status;
+    const resSurvey = await fetch(URLS.API + '/survey/lastKey', {
+      next: { revalidate: 600, tags: ['survey'] },
+    });
+    dataSurvey = await resSurvey.json();
+    statusData = resSurvey.status;
+
+    const resHistorical = await fetch(URLS.API + '/survey/historicalPositions', {
+      next: { revalidate: 600, tags: ['historical'] },
+    });
+
+    dataHistorical = await resHistorical.json();
   } catch (e) {
-    data = {
+    dataSurvey = {
       favorite_chapters: {
         dummy: 0,
       },
@@ -23,12 +34,20 @@ export default async function Home() {
       selectedComments: [],
     };
     statusData = -1;
+    dataHistorical = {
+      favorite_chapters: {
+        dummy: 0,
+      },
+      least_favorite_chapters: {
+        dummy: 0,
+      },
+    };
   }
 
   return (
     <>
       <Header />
-      <Main surveyData={data} responseStatus={statusData} />
+      <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} />
       <TopWindow />
     </>
   );

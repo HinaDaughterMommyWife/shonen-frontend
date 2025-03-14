@@ -85,7 +85,7 @@ body {
   height: 240px;
   position: relative;
   transform-style: preserve-3d;
-  animation: spin-loop 6s infinite linear;
+  animation: spin-loop 3s infinite linear;
 }
 
 .cube-face {
@@ -95,7 +95,6 @@ body {
   background: rgb(0, 0, 0);
 }
 
-/* Ajuste de profundidad (mitad del tamaño del cubo) */
 .front {
   transform: rotateY(0deg) translateZ(120px);
 }
@@ -115,7 +114,6 @@ body {
   transform: rotateX(-90deg) translateZ(120px);
 }
 
-/* Animación con velocidad uniforme */
 @keyframes spin-loop {
   from {
     transform: rotate3d(1, 1, 1, 0deg);
@@ -123,4 +121,33 @@ body {
   to {
     transform: rotate3d(1, 1, 1, 360deg);
   }
+}
+
+.break-word {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@keyframes wobble {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wobble-text {
+  @apply text-yellow-400 text-2xl font-bold;
+  animation: wobble 4s infinite ease-in-out;
 }

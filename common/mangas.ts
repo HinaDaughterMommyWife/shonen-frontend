@@ -150,5 +150,11 @@ export const MANGAS: Record<string, Manga> = {
         title: 'Black Clover',
         team: 'blue',
         avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsv0nHJOyLbhI7ovQkEdBqiwycHRXDAgmW3M4u'
+    },
+    'majo-taisen': {
+        id: 'majo-taisen',
+        title: 'Majo Taisen',
+        team: 'blue',
+        avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs92Kxp9k1XHJRWw2l1Gy5B7eZAIsbioPcNDSa'
     }
 }

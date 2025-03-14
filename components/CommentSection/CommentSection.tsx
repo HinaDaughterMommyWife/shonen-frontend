@@ -23,53 +23,53 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px]">Comentarios semanales</h2>
-          <div className="flex md:flex-row gap-2xlarge justify-center items-center my-[780px]">
+          <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-[256px] w-[256px] align-middle animate-[invert-wave_8s_infinite] [animation-delay:0s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-[256px] w-[256px] align-middle animate-spin-wave [animation-delay:0s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-32 w-32 align-middle animate-[invert-wave_8s_infinite] [animation-delay:1s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-32 w-32 align-middle animate-spin-wave [animation-delay:0.5s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-16 w-16 align-middle animate-[invert-wave_8s_infinite] [animation-delay:2s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-16 w-16 align-middle animate-spin-wave [animation-delay:1s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-8 w-8 align-middle animate-[invert-wave_8s_infinite] [animation-delay:3s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-8 w-8 align-middle animate-spin-wave [animation-delay:1.5s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-4 w-4 align-middle animate-[invert-wave_8s_infinite] [animation-delay:4s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-4 w-4 align-middle animate-spin-wave [animation-delay:2s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-2 w-2 align-middle animate-[invert-wave_8s_infinite] [animation-delay:5s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-2 w-2 align-middle animate-spin-wave [animation-delay:2.5s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-1 w-1 align-middle animate-[invert-wave_8s_infinite] [animation-delay:6s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-1 w-1 align-middle animate-spin-wave [animation-delay:3s]"
               loading="lazy"
             />
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-0.5 w-0.5 align-middle animate-[invert-wave_8s_infinite] [animation-delay:7s]"
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+              alt="pepelu"
+              className="inline h-0.5 w-0.5 align-middle animate-spin-wave [animation-delay:3.5s]"
               loading="lazy"
             />
           </div>
@@ -101,7 +101,7 @@ export default function CommentSection() {
                     ),
                     p: ({ children }) => {
                       return (
-                        <p className="text-5xl whitespace-pre-line">
+                        <p className="text-5xl whitespace-pre-line break-word">
                           {Children.map(children, (child) => {
                             if (typeof child === 'string') {
                               return child
@@ -183,53 +183,3 @@ export default function CommentSection() {
     </section>
   );
 }
-
-/*
-<img
-                  src={
-                    'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'
-                  }
-                  alt={'pepelu'}
-                  className={`inline h-[420px] w-[420px] align-middle cube-face`}
-                  loading="lazy"
-                />
-*/
-
-/*
-{index === comments.length - 2 && (
-                <div className="scene">
-                  <div className="cube">
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face front"
-                    />
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face back"
-                    />
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face left"
-                    />
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face right"
-                    />
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face top"
-                    />
-                    <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-                      alt="Pepelu"
-                      className="cube-face bottom"
-                    />
-                  </div>
-                </div>
-              )}
-*/

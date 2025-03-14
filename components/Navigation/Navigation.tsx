@@ -10,7 +10,7 @@ export default function Navigation() {
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-6xlarge">
       <div className="mx-auto block w-full max-w-[1040px]">
-        <div className="flex gap-2xlarge justify-center">
+        <div className="flex gap-2xlarge justify-center md:flex-row flex-col">
           {Object.values(Section).map((item) => (
             <button
               key={item}
