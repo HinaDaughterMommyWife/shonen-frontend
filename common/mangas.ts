@@ -156,5 +156,11 @@ export const MANGAS: Record<string, Manga> = {
         title: 'Majo Taisen',
         team: 'blue',
         avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs92Kxp9k1XHJRWw2l1Gy5B7eZAIsbioPcNDSa'
+    },
+    'vinland':{
+        id: 'vinland',
+        title: 'Vinland Saga',
+        team: 'red',
+        avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsPtceX26lAoc0ziTZFdDsrGXx1w7JqtVbkMOK'
     }
 }
