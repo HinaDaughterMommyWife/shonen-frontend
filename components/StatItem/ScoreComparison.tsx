@@ -7,7 +7,8 @@ interface ScoreComparisonProps {
 }
 
 export default function ScoreComparison({ position, previousPosition }: ScoreComparisonProps) {
-  const change = position - previousPosition;
+  const safePreviousPosition = previousPosition ?? position
+  const change = position - safePreviousPosition;
   const sign: -1 | 0 | 1 = Math.sign(change) as -1 | 0 | 1;
 
   const iconMap = {

@@ -13,13 +13,13 @@ export default async function Home() {
 
   try {
     const resSurvey = await fetch(URLS.API + '/survey/lastKey', {
-      next: { revalidate: 600, tags: ['survey'] },
+      next: { revalidate: 800, tags: ['survey'] },
     });
     dataSurvey = await resSurvey.json();
     statusData = resSurvey.status;
 
     const resHistorical = await fetch(URLS.API + '/survey/historicalPositions', {
-      next: { revalidate: 600, tags: ['historical'] },
+      next: { revalidate: 800, tags: ['historical'] },
     });
 
     dataHistorical = await resHistorical.json();
