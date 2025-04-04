@@ -49,7 +49,7 @@ export default function StatsLiked() {
             Total de votos: {totalScore}
           </p>
         </div>
-        <div className="flex flex-col gap-medium pt-4xlarge text-sm text-gray-500/75">
+        <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
             Nota 1: Se esta trabajando en un chequeo automatico de los mangas publicados que
             participan del shonen semanal (revision automatica si X manga ha publicado un capitulo)
@@ -84,9 +84,6 @@ export default function StatsLiked() {
             <TabsTrigger value={ViewType.BAR}>Barras</TabsTrigger>
             <TabsTrigger value={ViewType.SIMPLE}>Simple</TabsTrigger>
           </TabsList>
-          <div className="flex flex-col gap-medium pt-2xlarge text-center">
-            <WavyText text="Nueva Feature, Comparacion de Puntajes Previos" />
-          </div>
           <TabsContent value={ViewType.BAR}>
             <div className="flex flex-col gap-large pt-2xlarge">
               {stats.map((item, index) => (

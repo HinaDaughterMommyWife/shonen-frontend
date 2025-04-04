@@ -31,20 +31,7 @@ export default function Header() {
       setSection(section);
     }, 800);
   };
-  // El Shonen Semanal Beta - Final Season Parte 3 (Second Half)
-
-  /*
-  <span className="text-sm text-gray-500/75">Darkrai a tener que ver las 100 novias</span>{' '}
-          <img
-            src={
-              'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1fda4a1b40094c93af334f8b60868a7c/static/light/1.0'
-            }
-            alt={'pepelu'}
-            className="inline h-5 w-5 align-middle"
-            loading="lazy"
-          />
-  */
-
+  
   return (
     <>
       <header
@@ -55,53 +42,15 @@ export default function Header() {
         )}
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
-          <h2 className="pb-2 text-sm font-semibold tracking-tight text-yellow-300 opacity-70">
-            (Del ganador de los Premios Simbolista 2024 "Mayor Itadori")
-          </h2>
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            El Shonen Semanal Beta - Simbolista of the Year Edition
+          El Shonen Semanal Beta - Final Season Parte 3 (Second Half)
           </h2>
           <span className="text-sm text-gray-500/75">
-            Y.. cuando llega el premio a mi cerro? A quien le doy mi direccion?
+            Tralalero Tralala
           </span>{' '}
-          <img
-            src={
-              'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_47e825274dcb405981374b875bc0ff66/static/light/1.0'
-            }
-            alt={'pepelu'}
-            className="inline h-6 w-6 align-middle"
-            loading="lazy"
-          />
+          🦈 👟👟
         </div>
       </header>
-      <div className="w-full px-small sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 pt-2xlarge">
-        <div className="mx-auto flex w-full text-center justify-center xl:flex-row flex-col gap-4xlarge xl:gap-2">
-          <img
-            src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsaCJzM6dIe6DPKJbANLT1t79HRaZkMfWS3iF8"
-            alt="Simbolista of the Year"
-            className="w-[240px] h-auto mb-4 rounded-full shadow-lg self-center"
-            loading="lazy"
-          />
-          <img
-            src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBslrz04v5OpiVTzR1oDaUeb52IF7wXZmjAC39s"
-            alt="Simbolista of the Year"
-            className="w-[240px] h-auto mb-4 rounded-full shadow-lg self-center"
-            loading="lazy"
-          />
-          <img
-            src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBshnqtMaDR2Ivlsz6EaOq9PrLndbfyxtwu7V0D"
-            alt="Simbolista of the Year"
-            className="w-[240px] h-auto mb-4 rounded-full shadow-lg self-center"
-            loading="lazy"
-          />
-          <img
-            src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsfZ7irJsIN2bCgPoAEUHKpjtWY1kd3uG8QSvh"
-            alt="Simbolista of the Year"
-            className="w-[240px] h-auto  mb-4 rounded-full shadow-lg self-center"
-            loading="lazy"
-          />
-        </div>
-      </div>
       <div
         className={clsx(
           'fixed top-0 left-0 w-full bg-slate-900 shadow-md transition-all duration-300 z-10 py-medium',
