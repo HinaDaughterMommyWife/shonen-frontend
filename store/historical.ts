@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { CloudInterface } from './survey';
 
 interface Manga {
   [key: string]: number;
@@ -17,7 +18,9 @@ export enum STATUS {
 export interface HistoricalState {
   historical: HistoricalResponse;
   status: STATUS;
+  experimental: CloudInterface[];
   putHistorical: (responses: HistoricalResponse) => void;
+  putExperimental: (responses: CloudInterface[]) => void;
   setStatus: (status: STATUS) => void;
 }
 
@@ -26,10 +29,12 @@ export const useHistoricalStore = create<HistoricalState>((set) => ({
     favorite_chapters: {},
     least_favorite_chapters: {},
   },
+  experimental: [],
   status: STATUS.WAITING,
   putHistorical: (status) =>
     set(() => {
       return { historical: status };
     }),
-  setStatus: (status) => set(() => ({ status: status })),
+  putExperimental: (experimental) => set(() => ({ experimental })),
+  setStatus: (status) => set(() => ({ status: status }))
 }));

@@ -10,6 +10,11 @@ export interface SurveyResponse {
   selectedComments: string[];
 }
 
+export interface CloudInterface {
+  text: string;
+  value: number;
+}
+
 export enum STATUS {
   WAITING,
   GET_DATA = 200,

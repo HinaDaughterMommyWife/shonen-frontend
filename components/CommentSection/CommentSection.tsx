@@ -1,12 +1,14 @@
 'use client';
 
 import { useSurveyStore } from '@/store';
+import { useHistoricalStore } from '@/store/historical';
 import { nanoid } from 'nanoid';
 import { Children } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
+import Expermient from './Expermient';
 
 const emotes: Record<string, string> = {
   ':PotFriend:': 'https://cdn3.emoji.gg/emojis/1412-potfriend.png',
@@ -15,7 +17,7 @@ const emotes: Record<string, string> = {
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
-
+  const { experimental } = useHistoricalStore();
   const comments = survey?.selectedComments || [];
 
   return (
@@ -23,6 +25,9 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px]">Comentarios semanales</h2>
+          {experimental.length > 0 && (
+            <Expermient data={experimental} />
+          )}
           <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
             <img
               src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
