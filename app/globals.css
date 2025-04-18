@@ -151,3 +151,33 @@ body {
   @apply text-yellow-400 text-2xl font-bold;
   animation: wobble 4s infinite ease-in-out;
 }
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 500;
+  background-image: url('/noise.gif');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: 0 0;
+  opacity: 0;
+  image-rendering: pixelated;
+  animation: fadeInNoise 5s ease-out 0s 1 forwards;
+}
+
+@keyframes fadeInNoise {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+
+.delay-2000{
+  transition-delay: 2000ms;
+}

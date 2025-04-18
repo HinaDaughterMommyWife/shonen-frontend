@@ -31,7 +31,7 @@ export default function Header() {
       setSection(section);
     }, 800);
   };
-  
+
   return (
     <>
       <header
@@ -43,12 +43,15 @@ export default function Header() {
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          El Shonen Semanal Beta - Final Season Parte 3 (Second Half)
+            SHONENMANIA 118
           </h2>
           <span className="text-sm text-gray-500/75">
-            Tralalero Tralala
-          </span>{' '}
-          🦈 👟👟
+            The Rock esta controlando mi mente <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/22639/static/dark/2.0'}
+              className="inline h-6 w-6 align-middle"
+              loading="lazy"
+            />
+          </span>
         </div>
       </header>
       <div

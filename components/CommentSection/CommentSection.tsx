@@ -9,11 +9,15 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
 import Expermient from './Expermient';
+import Luis from './Luis';
 
 const emotes: Record<string, string> = {
   ':PotFriend:': 'https://cdn3.emoji.gg/emojis/1412-potfriend.png',
   ':PEPELU:': 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ',
 };
+
+const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsnnhdaqBEwi4ZKzYNLpRc1xlWyOGXngAU87Ds';
+// const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
@@ -25,10 +29,47 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px]">Comentarios semanales</h2>
-          {experimental.length > 0 && (
+          <div className="w-full px-8 pt-12 pb-[600px] flex flex-col gap-8 mt-[580px]">
+            <div>
+              <h2 className="text-3xl font-bold text-center">
+                Con respecto a las "Palabras mas usadas"
+              </h2>
+              <span className="block text-center text-gray-500 text-base mt-2">
+                Necesito un par de semanas para hacer esto mas automatico, pero, por favor Darkrai, responde esta pregunta:
+              </span>
+              <span className="block text-center text-yellow-500 text-base mt-2">
+                ¿Filtro los emotes, los !comandos y los @robraas? Porque si no lo hago, veras el mismo Top cada semana xd
+              </span>
+            </div>
+          </div>
+
+          <div className="w-full px-8 pt-12 pb-[600px] flex flex-col gap-8 mt-[300px]">
+            <h2 className="text-2xl font-bold text-center">
+              Este comentario me llego a alma, en su honor esta semana no estaran los Pepelus
+            </h2>
+            <img
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsBWss3zNV64s5bjuGWe37Ic8z19wEDvlqmRxH"
+              alt="pepelu"
+              className="self-center h-auto w-[456px] align-middle my-10"
+              loading="lazy"
+            />
+            <img
+              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsgNOiRTk6w8bydkmZ40HcCSDpWYNJuQleo7MU"
+              alt="pepelu"
+              className="self-center h-auto w-[456px] align-middle"
+              loading="lazy"
+            />
+          </div>
+          <div className="w-full px-8 pt-12 pb-[600px] flex flex-col gap-8 mt-[300px]">
+            <h2 className="text-3xl font-bold text-center">
+              En su lugar...
+            </h2>
+          </div>
+          <Luis />
+          {/* {experimental.length > 0 && (
             <Expermient data={experimental} />
-          )}
-          <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
+          )} */}
+          {/* <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
             <img
               src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
               alt="pepelu"
@@ -77,7 +118,8 @@ export default function CommentSection() {
               className="inline h-0.5 w-0.5 align-middle animate-spin-wave [animation-delay:3.5s]"
               loading="lazy"
             />
-          </div>
+          </div> */}
+          <div className="w-full px-8 py-[80px] flex flex-col gap-8 " />
         </div>
         <div className="flex flex-col pt-[120px] gap-[220px]">
           {comments.map((item, index) => (
@@ -137,9 +179,7 @@ export default function CommentSection() {
               </div>
               {index < comments.length - 2 && (
                 <img
-                  src={
-                    'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'
-                  }
+                  src={PEPELU_IMAGE}
                   alt={'pepelu'}
                   className={`inline h-[240px] w-[240px] align-middle`}
                   loading="lazy"
@@ -149,32 +189,32 @@ export default function CommentSection() {
                 <div className="scene">
                   <div className="cube">
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face front"
                     />
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face back"
                     />
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face left"
                     />
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face right"
                     />
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face top"
                     />
                     <img
-                      src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
+                      src={PEPELU_IMAGE}
                       alt="Pepelu"
                       className="cube-face bottom"
                     />
