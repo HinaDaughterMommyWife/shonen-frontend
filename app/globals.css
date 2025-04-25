@@ -33,6 +33,13 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --cube-size: 240px;
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --cube-size: 160px;
+    }
   }
 
   .dark {
@@ -71,9 +78,10 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
 .scene {
-  width: 240px;
-  height: 240px;
+  width: var(--cube-size);
+  height: var(--cube-size);
   perspective: 1000px;
   display: flex;
   justify-content: center;
@@ -81,8 +89,8 @@ body {
 }
 
 .cube {
-  width: 240px;
-  height: 240px;
+  width: var(--cube-size);
+  height: var(--cube-size);
   position: relative;
   transform-style: preserve-3d;
   animation: spin-loop 3s infinite linear;
@@ -90,29 +98,18 @@ body {
 
 .cube-face {
   position: absolute;
-  width: 240px;
-  height: 240px;
-  background: rgb(0, 0, 0);
+  width: var(--cube-size);
+  height: var(--cube-size);
+  background: black;
 }
 
-.front {
-  transform: rotateY(0deg) translateZ(120px);
-}
-.back {
-  transform: rotateY(180deg) translateZ(120px);
-}
-.left {
-  transform: rotateY(-90deg) translateZ(120px);
-}
-.right {
-  transform: rotateY(90deg) translateZ(120px);
-}
-.top {
-  transform: rotateX(90deg) translateZ(120px);
-}
-.bottom {
-  transform: rotateX(-90deg) translateZ(120px);
-}
+.front  { transform: translateZ(calc(var(--cube-size) / 2)); }
+.back   { transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2)); }
+.left   { transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+.right  { transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2)); }
+.top    { transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2)); }
+.bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+
 
 @keyframes spin-loop {
   from {
@@ -180,4 +177,9 @@ body {
 
 .delay-2000{
   transition-delay: 2000ms;
+}
+
+@keyframes rainbow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
