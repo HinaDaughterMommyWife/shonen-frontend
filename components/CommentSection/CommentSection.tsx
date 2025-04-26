@@ -8,6 +8,7 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
+import Luchitas from './Luchitas';
 
 const emotes: Record<string, string> = {
   ':PotFriend:': 'https://cdn3.emoji.gg/emojis/1412-potfriend.png',
@@ -49,7 +50,7 @@ export default function CommentSection() {
           <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
             <h2 className="text-center font-bold text-3xl max-md:text-2xl text-yellow-500">Si, por algun motivo, quieres hacer el Shonen Semanal en Japon, esta pagina es 100% funcional en Movil</h2>
           </div>
-
+          <Luchitas />
           <div className="flex gap-2xlarge justify-center items-center my-[420px] md:flex-row flex-col">
             <img
               src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
