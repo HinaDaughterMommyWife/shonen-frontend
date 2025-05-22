@@ -79,12 +79,17 @@ export default {
       keyframes: {
         'spin-wave': {
           '0%': { transform: 'rotate(0deg)' },
-          '10%': { transform: 'rotate(360deg)' } /* Gira rápido y luego se detiene */,
-          '100%': { transform: 'rotate(360deg)' } /* Mantiene la posición final */,
+          '10%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'spin-orbit': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
       animation: {
-        'spin-wave': 'spin-wave 4s linear infinite' /* Cada imagen toma 4s en su ciclo */,
+        'spin-wave': 'spin-wave 4s linear infinite',
+        'spin-orbit': 'spin-orbit 10s linear infinite',
       },
     },
   },

@@ -46,8 +46,8 @@ export default function Header() {
             El Shonen Mensual - Beta
           </h2>
           <span className="text-sm text-gray-500/75">
-            Darkrai va a volver a su Arco de Golfo <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_4c39207000564711868f3196cc0a8748/static/dark/2.0'}
+            El Retorno del SapoWeon <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_47e825274dcb405981374b875bc0ff66/static/light/3.0'}
               className="inline h-6 w-6 align-middle"
               loading="lazy"
             />
@@ -68,7 +68,7 @@ export default function Header() {
                 className="px-medium py-small bg-gray-700 text-white text-sm rounded-full hover:bg-gray-600 transition"
               >
                 <span className="md:block hidden"> ← {prevSection.tinyTitle}</span>
-                <span className="md:hidden"> ← {prevSection.icon}</span>
+                <span className="md:hidden">{prevSection.icon}</span>
               </button>
             )}
           </div>
@@ -82,7 +82,7 @@ export default function Header() {
                 className="px-medium py-small bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition"
               >
                 <span className="md:block hidden"> {nextSection.tinyTitle} →</span>
-                <span className="md:hidden"> {nextSection.icon} →</span>
+                <span className="md:hidden"> {nextSection.icon}</span>
               </button>
             )}
           </div>

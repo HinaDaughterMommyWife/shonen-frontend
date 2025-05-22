@@ -8,24 +8,21 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
-import Luchitas from './Luchitas';
+import OrbitLuis from './OrbitLuis';
 
 const emotes: Record<string, string> = {
   ':PotFriend:': 'https://cdn3.emoji.gg/emojis/1412-potfriend.png',
   ':PEPELU:': 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ',
 };
 
-const LUIS_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsnnhdaqBEwi4ZKzYNLpRc1xlWyOGXngAU87Ds';
 const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
-  // const { experimental } = useHistoricalStore();
   const comments = survey?.selectedComments || [];
 
   const getRotationClass = (index: number) => {
     const rotationStep = index % 4;
-    console.log('index', index, 'rotationStep', rotationStep);
     switch (rotationStep) {
       case 0:
         return 'rotate-0';
@@ -46,61 +43,7 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
-
-          <div className="flex gap-2xlarge justify-center items-center my-[780px] md:flex-row flex-col">
-            <h2 className="text-center font-bold text-3xl max-md:text-2xl text-yellow-500">Si, por algun motivo, quieres hacer el Shonen Semanal en Japon, esta pagina es 100% funcional en Movil</h2>
-          </div>
-          <Luchitas />
-          <div className="flex gap-2xlarge justify-center items-center my-[420px] md:flex-row flex-col">
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-[256px] w-[256px] align-middle animate-spin-wave [animation-delay:0s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-32 w-32 align-middle animate-spin-wave [animation-delay:0.5s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-16 w-16 align-middle animate-spin-wave [animation-delay:1s]"
-              loading="lazy"
-            />
-            <img
-              src={LUIS_IMAGE}
-              alt="luis"
-              className="inline h-8 w-8 align-middle animate-spin-wave [animation-delay:1.5s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-4 w-4 align-middle animate-spin-wave [animation-delay:2s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-2 w-2 align-middle animate-spin-wave [animation-delay:2.5s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-1 w-1 align-middle animate-spin-wave [animation-delay:3s]"
-              loading="lazy"
-            />
-            <img
-              src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ"
-              alt="pepelu"
-              className="inline h-0.5 w-0.5 align-middle animate-spin-wave [animation-delay:3.5s]"
-              loading="lazy"
-            />
-          </div>
+          <OrbitLuis />
           <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
         </div>
         <div className="flex flex-col pt-[120px] gap-[220px]">
