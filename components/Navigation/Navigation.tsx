@@ -2,7 +2,6 @@
 
 import { getSectionData } from '@/common';
 import { Section, useSectionStore } from '@/store';
-import { useEffect } from 'react';
 
 export default function Navigation() {
   const { section, setSection } = useSectionStore();
@@ -14,17 +13,16 @@ export default function Navigation() {
           {Object.values(Section).map((item) => (
             <button
               key={item}
+              {...{ 'data-s:event': `click-nav-${item}` }}
               onClick={() => setSection(item)}
-              className={`${
-                section === item ? 'text-primary border-primary' : 'text-secondary '
-              } text-2xlarge font-bold border rounded-2xl px-2xlarge py-medium hover:border-primary hover:text-primary transition-all duration-300`}
+              className={`${section === item ? 'text-primary border-primary' : 'text-secondary '
+                } text-2xlarge font-bold border rounded-2xl px-2xlarge py-medium hover:border-primary hover:text-primary transition-all duration-300`}
             >
               {getSectionData(item).tinyTitle}
             </button>
           ))}
         </div>
       </div>
-      {/* <EmoteText text="hola :darkraiFuristare:" /> */}
     </section>
   );
 }

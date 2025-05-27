@@ -43,11 +43,11 @@ export default function Header() {
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            El Shonen Mensual - Beta
+            El Shonen Semanal - Beta
           </h2>
           <span className="text-sm text-gray-500/75">
-            El Retorno del SapoWeon <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_47e825274dcb405981374b875bc0ff66/static/light/3.0'}
+            Balatreate <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_40faa86553334801b25612cc01e7ddde/animated/light/3.0'}
               className="inline h-6 w-6 align-middle"
               loading="lazy"
             />
@@ -64,6 +64,7 @@ export default function Header() {
           <div className="md:w-[320px] w-[160px] flex justify-start">
             {prevSection && (
               <button
+                {...{ 'data-s:event': `click-header-${prevSection.key}` }}
                 onClick={() => handleChangeSection(prevSection.key)}
                 className="px-medium py-small bg-gray-700 text-white text-sm rounded-full hover:bg-gray-600 transition"
               >
@@ -78,6 +79,7 @@ export default function Header() {
           <div className="md:w-[320px] w-[160px] flex justify-end">
             {nextSection && (
               <button
+                {...{ 'data-s:event': `click-header-${nextSection.key}` }}
                 onClick={() => handleChangeSection(nextSection.key)}
                 className="px-medium py-small bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition"
               >
