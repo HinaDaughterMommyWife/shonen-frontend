@@ -35,7 +35,7 @@ export default function StatItem({
   const percentage = Math.min(100, (value / maxValue) * 100);
   const bgColor = team === 'red' ? 'bg-red-500/50' : 'bg-blue-500/50';
 
-  const bgColorIcon = team === 'red' ? 'bg-red-400' : 'bg-blue-400';
+  const bgColorIcon = team === 'red' ? 'bg-red-500' : 'bg-blue-500';
 
   return (
     <div className="flex w-full gap-small">
@@ -61,7 +61,7 @@ export default function StatItem({
               </span>
             )}
             <div
-              className={`absolute bottom-0 right-0 flex items-center justify-center ${bgColorIcon} rounded-full w-8 h-8 sm:text-xl text-xs font-bold text-black`}
+              className={`absolute bottom-0 right-0 flex items-center justify-center ${bgColorIcon} rounded-full w-8 h-8 sm:text-xl text-xs font-bold text-white`}
             >
               {position}
             </div>

@@ -51,30 +51,24 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
-            Nota 1: Se esta trabajando en un chequeo automatico de los mangas publicados que
-            participan del shonen semanal (revision automatica si X manga ha publicado un capitulo)
+            Nota 1: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">40%</span>
           </span>
           <span>
-            Nota 2: Se esta trabajando en la posibilidad de que la gente pueda poner
-            <span className="font-bold text-purple-700"> emotes de Twitch</span> de los canales:
-            [darkrai, perico, emotes nativos de twitch, etc] en los comentarios (incluyendo los
-            animados) (si al sapoperro no le gusta la idea, se descarta xd) (se espera comentarios
-            llenos de pepelu{' '}
+            Nota 2: <span className="font-bold text-purple-700">Emotes de Twitch</span> en los comentarios al <span className="font-bold text-yellow-500 animate-[rainbow_3s_linear_infinite]">90%!!!  </span>
             <img
-              src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
-              alt={'pepelu'}
-              className="inline h-8 w-8 align-middle animate-spin"
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_9f77774abc4f4978b1a4fae87a64d099/animated/light/3.0'}
+              alt={'shupogaki'}
+              className="inline h-6 w-6 align-middle -scale-x-100"
               loading="lazy"
             />{' '}
-            )
           </span>
           <span>
             <a
-              href="https://www.youtube.com/watch?v=ivNNRTnztbA"
+              href="https://youtu.be/xy2DWzkCz7U"
               target="_blank"
               className="underline"
             >
-              Nota 3: Mesugakis 😭💢 (link)
+              Nota 3: Shupogakis 😭💢 (link)
             </a>
           </span>
           <span>- GuibelOrgulloPeruano</span>

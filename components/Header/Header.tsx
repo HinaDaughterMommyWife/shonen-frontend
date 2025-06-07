@@ -43,11 +43,12 @@ export default function Header() {
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            El Shonen Semanal - Beta
+            The Summer Shonen Fest - Beta
           </h2>
           <span className="text-sm text-gray-500/75">
-            Balatreate <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_40faa86553334801b25612cc01e7ddde/animated/light/3.0'}
+            Donde esta Silksong <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/22639/static/dark/3.0'}
+              alt={'shupogaki'}
               className="inline h-6 w-6 align-middle"
               loading="lazy"
             />
@@ -56,7 +57,7 @@ export default function Header() {
       </header>
       <div
         className={clsx(
-          'fixed top-0 left-0 w-full bg-slate-900 shadow-md transition-all duration-300 z-10 py-medium',
+          'fixed top-0 left-0 w-full bg-slate-900 shadow-md transition-all duration-300 z-50 py-medium',
           isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full',
         )}
       >
