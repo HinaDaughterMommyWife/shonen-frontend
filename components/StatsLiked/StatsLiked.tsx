@@ -52,15 +52,12 @@ export default function StatsLiked() {
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
             Nota 1: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">40%</span>
-          </span>
-          <span>
-            Nota 2: <span className="font-bold text-purple-700">Emotes de Twitch</span> en los comentarios al <span className="font-bold text-yellow-500 animate-[rainbow_3s_linear_infinite]">90%!!!  </span>
             <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_9f77774abc4f4978b1a4fae87a64d099/animated/light/3.0'}
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
               alt={'shupogaki'}
-              className="inline h-6 w-6 align-middle -scale-x-100"
+              className="inline h-6 w-6 align-middle"
               loading="lazy"
-            />{' '}
+            />
           </span>
           <span>
             <a
@@ -68,7 +65,7 @@ export default function StatsLiked() {
               target="_blank"
               className="underline"
             >
-              Nota 3: Shupogakis 😭💢 (link)
+              Nota 2: Shupogakis 😭💢 (link)
             </a>
           </span>
           <span>- GuibelOrgulloPeruano</span>

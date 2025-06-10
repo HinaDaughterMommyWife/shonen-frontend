@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Section, useSectionStore } from '@/store';
 import { sectionData } from '@/common';
+import { useStateManager } from '@/providers/StateManager';
 
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false);
-  const { section, setSection } = useSectionStore();
+  const { sectionPage, setSectionPage } = useStateManager()
+
   const sections = Object.values(sectionData).sort((a, b) => a.order - b.order);
-  const currentIndex = sections.findIndex((s) => s.order === sectionData[section]?.order);
+  const currentIndex = sections.findIndex((s) => s.order === sectionData[sectionPage]?.order);
 
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
@@ -28,7 +30,7 @@ export default function Header() {
   const handleChangeSection = (section: Section) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
-      setSection(section);
+      setSectionPage(section);
     }, 800);
   };
 
@@ -43,12 +45,12 @@ export default function Header() {
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            The Summer Shonen Fest - Beta
+            El Shonen Semanal - Beta
           </h2>
           <span className="text-sm text-gray-500/75">
-            Donde esta Silksong <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/22639/static/dark/3.0'}
-              alt={'shupogaki'}
+            Tocho <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/animated/dark/3.0'}
+              alt={'dinoDance'}
               className="inline h-6 w-6 align-middle"
               loading="lazy"
             />
@@ -75,7 +77,7 @@ export default function Header() {
             )}
           </div>
           <h2 className="sm:text-xl text-base font-semibold text-center px-large">
-            {sectionData[section]?.title}
+            {sectionData[sectionPage]?.title}
           </h2>
           <div className="md:w-[320px] w-[160px] flex justify-end">
             {nextSection && (

@@ -4,3 +4,10 @@ namespace NodeJS {
     API_URL: string;
   }
 }
+namespace Window {
+  interface Window {
+    stonks?: {
+      trackEvent?: (event: string, payload?: any) => void;
+    };
+  }
+}

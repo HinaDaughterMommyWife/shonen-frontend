@@ -1,8 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Section, useSectionStore } from '@/store';
 import { useHistoricalStore } from '@/store/historical';
 import { ChevronDown, ChevronUp, EqualApproximately } from 'lucide-react';
 import ScoreComparison from './ScoreComparison';
+import Image from 'next/image';
+import { Avatar } from '../ui/custom/avatar';
 
 export interface StatItemProp {
   id: string;
@@ -51,10 +52,7 @@ export default function StatItem({
         <div className={`absolute inset-0 ${bgColor}`} style={{ width: `${percentage}%` }}></div>
         <div className="relative flex items-center w-full">
           <div className="relative sm:block hidden">
-            <Avatar className="sm:w-28 sm:h-28 w-12 h-12">
-              <AvatarImage src={icon} className="object-cover" loading="lazy" />
-              <AvatarFallback>SS</AvatarFallback>
-            </Avatar>
+            <Avatar src={icon} className="sm:w-28 sm:h-28 w-12 h-12" size={100} alt={title} />
             {index === 0 && (
               <span className="absolute -top-2 -right-0 h-6 w-6 sm:text-4xl text-2xl">
                 {section === Section.LIKED ? <>👑</> : <>💩</>}

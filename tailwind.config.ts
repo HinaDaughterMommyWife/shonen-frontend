@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { effectClassArray } from './common/emotesEffects';
 
 export default {
   darkMode: ['class'],
@@ -93,5 +94,6 @@ export default {
       },
     },
   },
+  safelist: effectClassArray,
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

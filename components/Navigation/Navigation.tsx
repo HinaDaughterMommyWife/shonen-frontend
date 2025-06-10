@@ -1,10 +1,18 @@
 'use client';
 
 import { getSectionData } from '@/common';
-import { Section, useSectionStore } from '@/store';
+import { Section } from '@/store';
+import { useStateManager } from '@/providers/StateManager';
 
 export default function Navigation() {
-  const { section, setSection } = useSectionStore();
+  const { sectionPage, setSectionPage } = useStateManager()
+
+  const handleSectionChange = (section: Section) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('section', section);
+    window.history.replaceState(null, '', `?${params.toString()}`);
+    setSectionPage(section);
+  };
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-6xlarge">
@@ -14,8 +22,8 @@ export default function Navigation() {
             <button
               key={item}
               {...{ 'data-s:event': `click-nav-${item}` }}
-              onClick={() => setSection(item)}
-              className={`${section === item ? 'text-primary border-primary' : 'text-secondary '
+              onClick={() => handleSectionChange(item)}
+              className={`${sectionPage === item ? 'text-primary border-primary' : 'text-secondary '
                 } text-2xlarge font-bold border rounded-2xl px-2xlarge py-medium hover:border-primary hover:text-primary transition-all duration-300`}
             >
               {getSectionData(item).tinyTitle}

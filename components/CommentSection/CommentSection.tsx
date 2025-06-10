@@ -2,24 +2,19 @@
 
 import { useSurveyStore } from '@/store';
 import { nanoid } from 'nanoid';
-import { Children } from 'react';
+import { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
-import OrbitLuis from './OrbitLuis';
+import EmoteDecorator from '../EmoteDecorator';
 
-const emotes: Record<string, string> = {
-  ':PotFriend:': 'https://cdn3.emoji.gg/emojis/1412-potfriend.png',
-  ':PEPELU:': 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ',
-};
-
-const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
+const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsp7QQpTePYPiZUKgdsI4JGNxR20Db3ze9FnTB';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
-  const comments = survey?.selectedComments || [];
+  let comments = survey?.selectedComments || [];
 
   const getRotationClass = (index: number) => {
     const rotationStep = index % 4;
@@ -39,11 +34,18 @@ export default function CommentSection() {
 
 
   return (
-    <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
+    <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge overflow-x-hidden">
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
-          <OrbitLuis />
+          <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
+            <img
+              src={PEPELU_IMAGE}
+              alt={'pepelu'}
+              className={cn('inline h-[180px] w-[180px] align-middle')}
+              loading="lazy"
+            />
+          </div>
           <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
         </div>
         <div className="flex flex-col pt-[120px] gap-[220px]">
@@ -61,11 +63,11 @@ export default function CommentSection() {
                         loading="lazy"
                       />
                     ),
-                    a: ({ children, href }) => (
+                    a: ({ children, href, target }) => (
                       <a
                         href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target={target}
+                        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
                         className="text-blue-500 underline"
                       >
                         {children}
@@ -73,28 +75,11 @@ export default function CommentSection() {
                     ),
                     p: ({ children }) => {
                       return (
-                        <p className="text-4xl md:text-5xl whitespace-pre-line break-word">
-                          {Children.map(children, (child) => {
-                            if (typeof child === 'string') {
-                              return child
-                                .split(/(:\w+:)/g)
-                                .map((part, index) =>
-                                  emotes[part] ? (
-                                    <img
-                                      key={index}
-                                      src={emotes[part]}
-                                      alt={part}
-                                      className="inline h-12 w-12 align-middle"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    part
-                                  ),
-                                );
-                            }
-                            return child;
-                          })}
-                        </p>
+                        <EmoteDecorator>
+                          <span className="text-4xl md:text-5xl whitespace-pre-line break-word">
+                            {children}
+                          </span>
+                        </EmoteDecorator>
                       );
                     },
                   }}
@@ -149,7 +134,7 @@ export default function CommentSection() {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }

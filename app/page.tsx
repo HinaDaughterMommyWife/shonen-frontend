@@ -1,16 +1,26 @@
 import { URLS } from '@/common';
+import { EmoteData } from '@/common/emotes';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import TopWindow from '@/components/TopWindow';
+import StateManagerProvider from '@/providers/StateManager';
+import { Section, useSectionStore } from '@/store';
 import { HistoricalResponse } from '@/store/historical';
 import { CloudInterface, SurveyResponse } from '@/store/survey';
+import { unpack } from 'msgpackr';
 
-export default async function Home() {
+interface SearchParams {
+  section: string;
+}
+
+export default async function Home({ searchParams }: { searchParams: Promise<SearchParams> }) {
   let dataSurvey: SurveyResponse;
   let statusData: number;
   let dataExperimental: CloudInterface[];
 
   let dataHistorical: HistoricalResponse;
+
+  let emoteData: Record<string, EmoteData>;
 
   try {
     const resSurvey = await fetch(URLS.API + '/survey/lastKey', {
@@ -30,6 +40,15 @@ export default async function Home() {
 
     dataExperimental = await resExperimental.json();
 
+    const resEmotedDataBuffer = await fetch(
+      "https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2"
+      , {
+        next: { revalidate: 3600, tags: ['emoteData'] }
+      })
+
+    const emoteArrayBuffer = await resEmotedDataBuffer.arrayBuffer();
+
+    emoteData = unpack(new Uint8Array(emoteArrayBuffer)) as Record<string, EmoteData>;
 
   } catch (e) {
     dataSurvey = {
@@ -53,13 +72,18 @@ export default async function Home() {
       },
     };
     dataExperimental = [];
+    emoteData = {};
   }
 
+  const params = await searchParams;
+
+  const section = (params.section || Section.LIKED) as Section;
+
   return (
-    <>
+    <StateManagerProvider initialSection={section}>
       <Header />
-      <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} />
+      <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} emotesData={emoteData} />
       <TopWindow />
-    </>
+    </StateManagerProvider>
   );
 }

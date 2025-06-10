@@ -1,11 +1,41 @@
-export enum EmoteChannel {
-    DARKRAI = 'darkrai'
+interface EmoteFile {
+  fileURL: string;
+  gridSize: number;
 }
 
-export const EMOTES_URL = {
-    [EmoteChannel.DARKRAI]: {
-        static: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs22ma8Aolsg76JvNkImERSopZqFPdQXbjhiCW',
-        animated: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsgwxOLGLk6w8bydkmZ40HcCSDpWYNJuQleo7M'
-    }
+interface FilePaths {
+  static: EmoteFile;
+  animated: EmoteFile;
 }
 
+interface StaticEmote {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+interface AnimatedEmote extends StaticEmote {
+  frameCount: number;
+  frameWidth: number;
+  frameHeight: number;
+  animationDuration: number;
+}
+
+type Emote = StaticEmote | AnimatedEmote;
+
+export interface EmoteData {
+  username: string;
+  filePaths: FilePaths;
+  emotes: Record<string, Emote>;
+}
+
+let EMOTES_DATA: Record<string, EmoteData> = {};
+
+export function getEmotesData() {
+  return EMOTES_DATA;
+}
+
+export function setEmotesData(data: Record<string, EmoteData>) {
+  EMOTES_DATA = data;
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import { EmoteData, setEmotesData } from '@/common/emotes';
 import Navigation from '@/components/Navigation';
 import SectionVoted from '@/components/SectionVoted/SectionVoted';
 import WatingData from '@/components/WatingData';
@@ -13,11 +14,14 @@ interface MainProps {
   historicalData: HistoricalResponse;
   experimentalData: CloudInterface[];
   responseStatus: number;
+  emotesData: Record<string, EmoteData>;
 }
 
-export default function Main({ surveyData, historicalData, responseStatus, experimentalData }: MainProps) {
+export default function Main({ surveyData, historicalData, responseStatus, experimentalData, emotesData }: MainProps) {
   const { putSurvey } = useSurveyStore();
   const { putHistorical, putExperimental } = useHistoricalStore();
+
+  setEmotesData(emotesData);
 
   useEffect(() => {
     if (surveyData !== undefined && responseStatus === STATUS.GET_DATA) {
