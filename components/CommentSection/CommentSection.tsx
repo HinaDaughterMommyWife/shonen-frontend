@@ -38,6 +38,20 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
+          <div className="w-full px-8 py-12 flex flex-col gap-8 mt-[280px]">
+            <div>
+              <span className="block text-center text-xl mt-2 font-semibold">Una cosa rapida, en la pagina de listado de emotes, las instruccionen dicen: "Para editar un emote, presiona la tecla Z y luego haz click en el emote"</span>
+              <span className="block text-center text-xl mt-2 font-semibold">Pero en dispositivos moviles esta complicado presionar "una letra Z" <img
+                src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_47e825274dcb405981374b875bc0ff66/static/light/3.0'}
+                alt={'sapoweon'}
+                className="inline h-8 w-8 align-middle"
+                loading="lazy"
+              />
+              </span>
+              <br />
+              <span className="block text-center text-xl mt-2 font-semibold">La siguiente semana voy a hacerlo funcional para los papus móviles, que según mis stats, la gente que usa móviles es un 48%.</span>
+            </div>
+          </div>
           <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
             <img
               src={PEPELU_IMAGE}

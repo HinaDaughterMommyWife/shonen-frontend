@@ -48,10 +48,10 @@ export default function Header() {
             El Shonen Semanal - Beta
           </h2>
           <span className="text-sm text-gray-500/75">
-            Tocho <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/animated/dark/3.0'}
-              alt={'dinoDance'}
-              className="inline h-6 w-6 align-middle"
+            Efecto Tunel? Eso no aparecia en Ant-Man? <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_50b3304bc0884c6792f13615db072a5c/static/dark/3.0'}
+              alt={'caitThinking'}
+              className="inline h-5 w-5 align-middle"
               loading="lazy"
             />
           </span>

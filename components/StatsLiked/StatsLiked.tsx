@@ -51,7 +51,7 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
-            Nota 1: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">40%</span>
+            Nota 1: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">50%</span>
             <img
               src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
               alt={'shupogaki'}
@@ -61,7 +61,7 @@ export default function StatsLiked() {
           </span>
           <span>
             <a
-              href="https://youtu.be/xy2DWzkCz7U"
+              href="https://youtu.be/hKryb92lWUk"
               target="_blank"
               className="underline"
             >
