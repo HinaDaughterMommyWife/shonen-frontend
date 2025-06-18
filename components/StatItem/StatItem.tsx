@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, EqualApproximately } from 'lucide-react';
 import ScoreComparison from './ScoreComparison';
 import Image from 'next/image';
 import { Avatar } from '../ui/custom/avatar';
+import { useStateManager } from '@/providers/StateManager';
 
 export interface StatItemProp {
   id: string;
@@ -26,12 +27,12 @@ export default function StatItem({
   team,
   position,
 }: StatItemProp) {
-  const { section } = useSectionStore();
+  const { sectionPage } = useStateManager();
   const {
     historical: { favorite_chapters, least_favorite_chapters },
   } = useHistoricalStore();
 
-  const currentArray = section === Section.LIKED ? favorite_chapters : least_favorite_chapters;
+  const currentArray = sectionPage === Section.LIKED ? favorite_chapters : least_favorite_chapters;
 
   const percentage = Math.min(100, (value / maxValue) * 100);
   const bgColor = team === 'red' ? 'bg-red-500/50' : 'bg-blue-500/50';
@@ -55,7 +56,7 @@ export default function StatItem({
             <Avatar src={icon} className="sm:w-28 sm:h-28 w-12 h-12" size={100} alt={title} />
             {index === 0 && (
               <span className="absolute -top-2 -right-0 h-6 w-6 sm:text-4xl text-2xl">
-                {section === Section.LIKED ? <>👑</> : <>💩</>}
+                {sectionPage === Section.LIKED ? <>👑</> : <>💩</>}
               </span>
             )}
             <div

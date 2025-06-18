@@ -1,9 +1,6 @@
 'use client';
 import { getTotalScore } from '@/lib/random';
-import { TabsTrigger, Tabs, TabsList, TabsContent } from '../ui/tabs';
 import { useEffect, useState } from 'react';
-import { ViewType } from '@/store/stats';
-import SimpleStats from '../SimpleStats';
 import { MANGAS } from '@/common/mangas';
 import { useSurveyStore } from '@/store';
 import { StatItem } from '../StatItem';
@@ -54,32 +51,21 @@ export default function StatsDisliked() {
             Total de votos: {totalScore}
           </p>
         </div>
-        <Tabs defaultValue={ViewType.BAR} className="w-full pt-2xlarge">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value={ViewType.BAR}>Barras</TabsTrigger>
-            <TabsTrigger value={ViewType.SIMPLE}>Simple</TabsTrigger>
-          </TabsList>
-          <TabsContent value={ViewType.BAR}>
-            <div className="flex flex-col gap-large pt-2xlarge">
-              {stats.map((item, index) => (
-                <StatItem
-                  id={item.id}
-                  key={index + '-stats'}
-                  title={item.title}
-                  value={item.score}
-                  maxValue={stats[0].score}
-                  icon={item.avatar}
-                  index={index}
-                  team={item.team}
-                  position={positionScore[item.id]}
-                />
-              ))}
-            </div>
-          </TabsContent>
-          <TabsContent value={ViewType.SIMPLE}>
-            <SimpleStats stats={stats} />
-          </TabsContent>
-        </Tabs>
+        <div className="flex flex-col gap-large pt-2xlarge">
+          {stats.map((item, index) => (
+            <StatItem
+              id={item.id}
+              key={index + '-stats'}
+              title={item.title}
+              value={item.score}
+              maxValue={stats[0].score}
+              icon={item.avatar}
+              index={index}
+              team={item.team}
+              position={positionScore[item.id]}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

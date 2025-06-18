@@ -1,6 +1,10 @@
 import type { Config } from 'tailwindcss';
 import { effectClassArray } from './common/emotesEffects';
 
+const touchPlugin = ({ addVariant }: { addVariant: (name: string, selector: string) => void }) => {
+  addVariant('coarse', '@media (pointer: coarse)');
+};
+
 export default {
   darkMode: ['class'],
   content: [
@@ -95,5 +99,8 @@ export default {
     },
   },
   safelist: effectClassArray,
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), touchPlugin],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 } satisfies Config;

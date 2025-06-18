@@ -1,4 +1,5 @@
 import { EmoteData } from '@/common/emotes';
+import EmotesInstruccions from '@/components/EmotesInstruccions/EmotesInstruccions';
 import EmotesShowcase from '@/components/EmotesShowcase/EmotesShowcase';
 import { unpack } from 'msgpackr';
 import { preload } from 'react-dom';
@@ -28,10 +29,7 @@ export default async function Home() {
             <div className="w-full flex justify-center py-large">
                 <h2 className="text-3xl font-bold">Listado de Emotes</h2>
             </div>
-            <div className="w-full flex justify-center flex-col gap-medium py-large items-center">
-                <span className="text-base font-bold text-gray-500">Para seleccionar un emote, haz click en un emote y se copiará al portapapeles.</span>
-                <span className="text-base font-bold text-gray-500">Para editar un emote, presiona la tecla Z y luego haz click en el emote.</span>
-            </div>
+            <EmotesInstruccions />
             <EmotesShowcase emotesData={emoteData} />
             <Toaster />
             <div className="w-full flex flex-col gap-medium justify-center py-large mt-xlarge text-sm">

@@ -51,7 +51,7 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
-            Nota 1: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">50%</span>
+            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">50%</span>
             <img
               src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
               alt={'shupogaki'}
@@ -59,7 +59,7 @@ export default function StatsLiked() {
               loading="lazy"
             />
           </span>
-          <span>
+          {/* <span>
             <a
               href="https://youtu.be/hKryb92lWUk"
               target="_blank"
@@ -67,35 +67,24 @@ export default function StatsLiked() {
             >
               Nota 2: Shupogakis 😭💢 (link)
             </a>
-          </span>
+          </span> */}
           <span>- GuibelOrgulloPeruano</span>
         </div>
-        <Tabs defaultValue={ViewType.BAR} className="w-full pt-2xlarge">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value={ViewType.BAR}>Barras</TabsTrigger>
-            <TabsTrigger value={ViewType.SIMPLE}>Simple</TabsTrigger>
-          </TabsList>
-          <TabsContent value={ViewType.BAR}>
-            <div className="flex flex-col gap-large pt-2xlarge">
-              {stats.map((item, index) => (
-                <StatItem
-                  id={item.id}
-                  key={index + '-stats'}
-                  title={item.title}
-                  value={item.score}
-                  maxValue={stats[0].score}
-                  icon={item.avatar}
-                  index={index}
-                  team={item.team}
-                  position={positionScore[item.id]}
-                />
-              ))}
-            </div>
-          </TabsContent>
-          <TabsContent value={ViewType.SIMPLE}>
-            <SimpleStats stats={stats} />
-          </TabsContent>
-        </Tabs>
+        <div className="flex flex-col gap-large pt-2xlarge">
+          {stats.map((item, index) => (
+            <StatItem
+              id={item.id}
+              key={index + '-stats'}
+              title={item.title}
+              value={item.score}
+              maxValue={stats[0].score}
+              icon={item.avatar}
+              index={index}
+              team={item.team}
+              position={positionScore[item.id]}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

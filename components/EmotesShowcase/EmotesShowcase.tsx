@@ -6,6 +6,8 @@ import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import EmoteEditor from './EmoteEditor';
 import { addToLocalStorageLimited, getLocalStorageArray } from '@/lib/localStorage';
+import { useTouchLongPress } from '@/hooks/useTouchLongPress';
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
 
 interface EmotesShowcaseProps {
     emotesData: Record<string, EmoteData> | null;
@@ -21,6 +23,13 @@ export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedEmoteName, setSelectedEmoteName] = useState<string | null>('');
     const [emoteHistory, setEmoteHistory] = useState<string[]>([]);
+    const getLongPressHandlers = useTouchLongPress({
+        onLongPress: (emoteName) => {
+            setSelectedEmoteName(emoteName);
+            setDialogOpen(true);
+        },
+        delay: 600,
+    });
 
 
     const emotesDataList = Object.values(emotesData ?? {}).map((emoteData) => ({
@@ -168,6 +177,8 @@ export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
         setEmoteHistory((prev) => [emoteName, ...prev.slice(0, 19)]);
     }
 
+    const emoteItemStyles = "cursor-pointer relative inline-flex items-center justify-center coarse:active:outline-none transition after:content-[''] after:absolute after:inset-0 after:rounded-full after:bg-gray-200/80 after:opacity-0 coarse:active:after:opacity-50 after:transition after:duration-200 after:pointer-events-none"
+
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <EmoteDecorator>
@@ -189,7 +200,8 @@ export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
                                         onClick={() => handleClickEmote(emoteName, true)}
                                         onMouseEnter={(e) => handleMouseEnter(e.currentTarget)}
                                         onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
-                                        className="cursor-pointer"
+                                        {...getLongPressHandlers(emoteName)}
+                                        className={emoteItemStyles}
                                     >
                                         {emoteName}
                                     </span>
@@ -212,25 +224,14 @@ export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
                                 }}
                                 className="flex flex-wrap [&>*]:transition-opacity [&>*]:duration-300 w-full gap-small justify-center"
                             >
-                                {/* {emoteData.emotes.map((emoteName) => (
-                                    <span
-                                        key={emoteName}
-                                        onClick={() => handleClickEmote(emoteName)}
-                                        onMouseEnter={(e) => handleMouseEnter(e.currentTarget)}
-                                        onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
-                                        className="cursor-pointer relative"
-                                    >
-                                        {emoteName}
-                                    </span>
-                                ))} */}
                                 {emoteData.emotes.filter((emoteName) => !emoteName.includes('Pit') && !emoteName.includes('Toes')).map((emoteName) => (
                                     <span
                                         key={emoteName}
                                         onClick={() => handleClickEmote(emoteName)}
                                         onMouseEnter={(e) => handleMouseEnter(e.currentTarget)}
                                         onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
-                                        className="cursor-pointer relative"
-                                    >
+                                        {...getLongPressHandlers(emoteName)}
+                                        className={emoteItemStyles}>
                                         {emoteName}
                                     </span>
                                 ))}
