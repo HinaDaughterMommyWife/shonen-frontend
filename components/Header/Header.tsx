@@ -16,7 +16,7 @@ export default function Header() {
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 
-  useEffect(() => {
+  /* useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => setIsSticky(!entry.isIntersecting), {
       threshold: 0,
     });
@@ -32,7 +32,7 @@ export default function Header() {
     setTimeout(() => {
       setSectionPage(section);
     }, 800);
-  };
+  }; */
 
   return (
     <>
@@ -44,20 +44,22 @@ export default function Header() {
         )}
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
-          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            El Shonen Semanal - Beta
+          <h2 className="scroll-m-20 border-b pb-2 text-3xl md:text-4xl font-light tracking-tight first:mt-0 font-great-fighter">
+            El Shonen Semanal
           </h2>
           <span className="text-sm text-gray-500/75">
-            Tocho <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dcd06b30a5c24f6eb871e8f5edbd44f7/animated/dark/3.0'}
-              alt={'dinoDance'}
+            Llevo 3 dias de rellolling por Super Creek <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1fda4a1b40094c93af334f8b60868a7c/static/dark/3.0'}
+              alt={'WhySoSerious'}
               className="inline h-5 w-5 align-middle"
               loading="lazy"
             />
+            <br />
+            <span className="text-xs">(Si estan leyendo esto, es porque aun no la tengo)</span>
           </span>
         </div>
       </header>
-      <div
+      {/* <div
         className={clsx(
           'fixed top-0 left-0 w-full bg-slate-900 shadow-md transition-all duration-300 z-50 py-medium',
           isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full',
@@ -92,7 +94,7 @@ export default function Header() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

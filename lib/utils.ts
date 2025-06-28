@@ -24,3 +24,25 @@ export function reorderScores(scores: Record<string, number>): Record<string, nu
 
   return rankedScores;
 }
+
+export const generateLinearSteps = (
+  stepsCount: number,
+  minValue: number,
+  maxValue: number,
+): number[] => {
+  const len = Math.max(0, Math.floor(stepsCount));
+  if (len === 0) return [];
+  if (len === 1) return [minValue];
+
+  const steps: number[] = [];
+  const stepSize = (maxValue - minValue) / (len - 1);
+
+  for (let i = 0; i < len; i++) {
+    steps.push(minValue + i * stepSize);
+  }
+
+  // Garantizar que el último valor sea exactamente maxValue (por acumulación de decimales)
+  steps[len - 1] = maxValue;
+
+  return steps;
+};

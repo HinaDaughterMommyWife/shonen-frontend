@@ -3,6 +3,7 @@
 import { getSectionData } from '@/common';
 import { Section } from '@/store';
 import { useStateManager } from '@/providers/StateManager';
+import { cn } from '@/lib/utils';
 
 export default function Navigation() {
   const { sectionPage, setSectionPage } = useStateManager()
@@ -23,8 +24,11 @@ export default function Navigation() {
               key={item}
               {...{ 'data-s:event': `click-nav-${item}` }}
               onClick={() => handleSectionChange(item)}
-              className={`${sectionPage === item ? 'text-primary border-primary' : 'text-secondary '
-                } text-2xlarge font-bold border rounded-2xl px-2xlarge py-medium hover:border-primary hover:text-primary transition-all duration-300`}
+              className={cn(
+                'text-2xlarge bg-background font-bold border-2 rounded-2xl px-2xlarge py-medium hover:border-primary hover:text-primary transition-all duration-300', {
+                'text-primary border-primary': sectionPage === item,
+                'text-secondary border-secondary': sectionPage !== item,
+              })}
             >
               {getSectionData(item).tinyTitle}
             </button>

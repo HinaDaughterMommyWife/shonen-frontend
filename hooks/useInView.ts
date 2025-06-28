@@ -5,9 +5,10 @@ type UseInViewProps = {
   distance?: number;
 };
 
-export function useInView<T extends HTMLElement = HTMLElement>(
-  { once = true, distance = 0 }: UseInViewProps = {}
-) {
+export function useInView<T extends HTMLElement = HTMLElement>({
+  once = true,
+  distance = 0,
+}: UseInViewProps = {}) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -29,8 +30,7 @@ export function useInView<T extends HTMLElement = HTMLElement>(
         const elementTop = entry.boundingClientRect.top;
         const elementBottom = entry.boundingClientRect.bottom;
 
-        const isInCenterZone =
-          elementTop < bottomLimit && elementBottom > topLimit;
+        const isInCenterZone = elementTop < bottomLimit && elementBottom > topLimit;
 
         if (isInCenterZone) {
           setInView(true);
@@ -41,7 +41,7 @@ export function useInView<T extends HTMLElement = HTMLElement>(
       },
       {
         threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
+      },
     );
 
     observer.observe(element);

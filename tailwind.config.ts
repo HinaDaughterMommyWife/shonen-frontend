@@ -14,6 +14,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'great-fighter': ['var(--font-great-fighter)'],
+      },
       screens: {
         xss: '320px',
         xs: '375px',

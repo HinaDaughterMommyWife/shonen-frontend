@@ -2,14 +2,10 @@
 
 import { getTotalScore } from '@/lib/random';
 import { useMemo } from 'react';
-import SimpleStats from '../SimpleStats';
-import { TabsTrigger, Tabs, TabsList, TabsContent } from '../ui/tabs';
-import { ViewType } from '@/store/stats';
 import { useSurveyStore } from '@/store';
 import { MANGAS } from '@/common/mangas';
 import { StatItem } from '../StatItem';
 import { reorderScores } from '@/lib/utils';
-import WavyText from '../ui/wobble';
 
 interface StatItemProps {
   id: string;
@@ -51,7 +47,7 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
-            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">50%</span>
+            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">60%</span>
             <img
               src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
               alt={'shupogaki'}
@@ -59,15 +55,20 @@ export default function StatsLiked() {
               loading="lazy"
             />
           </span>
-          {/* <span>
+          <span>
             <a
-              href="https://youtu.be/hKryb92lWUk"
+              href="https://x.com/AnimetrendsLA/status/1938590913007145222"
               target="_blank"
               className="underline"
             >
-              Nota 2: Shupogakis 😭💢 (link)
+              <img
+                src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1fda4a1b40094c93af334f8b60868a7c/static/dark/3.0'}
+                alt={'WhySoSerious'}
+                className="inline h-5 w-5 align-middle"
+                loading="lazy"
+              /> 👉 (link)
             </a>
-          </span> */}
+          </span>
           <span>- GuibelOrgulloPeruano</span>
         </div>
         <div className="flex flex-col gap-large pt-2xlarge">

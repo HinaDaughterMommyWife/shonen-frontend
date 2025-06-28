@@ -1,8 +1,6 @@
-import { Section, useSectionStore } from '@/store';
+import { Section } from '@/store';
 import { useHistoricalStore } from '@/store/historical';
-import { ChevronDown, ChevronUp, EqualApproximately } from 'lucide-react';
 import ScoreComparison from './ScoreComparison';
-import Image from 'next/image';
 import { Avatar } from '../ui/custom/avatar';
 import { useStateManager } from '@/providers/StateManager';
 

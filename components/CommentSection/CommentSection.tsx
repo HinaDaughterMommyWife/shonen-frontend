@@ -7,31 +7,17 @@ import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
-import { cn } from '@/lib/utils';
+import { cn, generateLinearSteps } from '@/lib/utils';
 import EmoteDecorator from '../EmoteDecorator';
+import CaitThinking from './CaitThinking';
 
-const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsp7QQpTePYPiZUKgdsI4JGNxR20Db3ze9FnTB';
+const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
   let comments = survey?.selectedComments || [];
 
-  const getRotationClass = (index: number) => {
-    const rotationStep = index % 4;
-    switch (rotationStep) {
-      case 0:
-        return 'rotate-0';
-      case 1:
-        return 'rotate-90';
-      case 2:
-        return 'rotate-180';
-      case 3:
-        return '-rotate-90';
-      default:
-        return 'rotate-0';
-    }
-  };
-
+  const linearSteps = generateLinearSteps(comments.length - 1, 8, 1200).slice(1);
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge overflow-x-hidden">
@@ -42,15 +28,15 @@ export default function CommentSection() {
             <img
               src={PEPELU_IMAGE}
               alt={'pepelu'}
-              className={cn('inline h-[180px] w-[180px] align-middle')}
+              className={cn('inline size-[12px] align-middle')}
               loading="lazy"
             />
           </div>
           <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
         </div>
-        <div className="flex flex-col pt-[120px] gap-[220px]">
+        <div className="flex flex-col pt-[120px] gap-[560px]">
           {comments.map((item, index) => (
-            <div className="flex flex-col gap-[180px] items-center" key={nanoid()}>
+            <div className="flex flex-col gap-[560px] items-center" key={nanoid()}>
               <div key={nanoid()} className="flex flex-col bg-white text-black md:p-2xlarge p-large">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm, remarkBreaks, remarkHtml]}
@@ -88,48 +74,26 @@ export default function CommentSection() {
                 </ReactMarkdown>
               </div>
               {index < comments.length - 2 && (
-                <img
-                  src={PEPELU_IMAGE}
-                  alt={'pepelu'}
-                  className={cn('inline h-[240px] w-[240px] align-middle', getRotationClass(index))}
-                  loading="lazy"
-                />
-              )}
-              {index === comments.length - 2 && (
-                <div className="scene">
-                  <div className="cube">
+                <div className="relative w-fit h-fit overflow-visible">
+                  <div
+                    className="relative"
+                    style={{
+                      width: Math.floor(linearSteps[index]) + 'px',
+                      height: Math.floor(linearSteps[index]) + 'px',
+                    }}
+                  >
                     <img
                       src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face front animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face back animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face left animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face right animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face top animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face bottom animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
+                      alt="pepelu"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 </div>
+
+              )}
+              {index === comments.length - 2 && (
+                <CaitThinking />
               )}
             </div>
           ))}
