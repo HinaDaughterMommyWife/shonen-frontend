@@ -1,6 +1,6 @@
 import { useInView } from "@/hooks/useInView";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CaitThinking() {
 
@@ -8,6 +8,8 @@ export default function CaitThinking() {
         once: true,
         distance: 15
     })
+
+    const [isEffectRunning, setIsEffectRunning] = useState(false);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -17,13 +19,26 @@ export default function CaitThinking() {
     }, []);
 
     useEffect(() => {
-        if (inView && audioRef.current) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.volume = 0.5;
-            audioRef.current.play().catch((err) => {
-                console.warn("Playback error:", err);
-            });
+        let timeout: NodeJS.Timeout;
+
+        if (inView) {
+            timeout = setTimeout(() => {
+                if (audioRef.current) {
+                    audioRef.current.currentTime = 0;
+                    audioRef.current.volume = 0.5;
+                    audioRef.current.play().catch((err) => {
+                        console.warn("Playback error:", err);
+                    });
+                    setIsEffectRunning(true);
+                }
+            }, 5000);
+
         }
+
+        return () => {
+            setIsEffectRunning(false);
+            clearTimeout(timeout);
+        };
     }, [inView, ref]);
 
     return (
@@ -31,7 +46,7 @@ export default function CaitThinking() {
             <div className={
                 cn("fixed inset-0 -z-10 bg-cover bg-center w-full h-full opacity-0 transition-opacity duration-1000 bg-[url('https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ')]",
                     {
-                        "opacity-100": inView
+                        "opacity-100": isEffectRunning
                     }
                 )}
             />
@@ -39,8 +54,16 @@ export default function CaitThinking() {
                 <img
                     src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_50b3304bc0884c6792f13615db072a5c/static/dark/3.0'}
                     alt={'caitThinking'}
-                    className={cn("inline size-[80px] align-middle transition-opacity duration-1000", {
+                    className={cn("inline absolute size-[80px] align-middle transition-opacity duration-1000", {
                         "opacity-0": inView
+                    })}
+                    loading="lazy"
+                />
+                <img
+                    src={'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ'}
+                    alt={'caitThinking'}
+                    className={cn("inline absolute size-[140px] align-middle transition-opacity duration-1000", {
+                        "opacity-0": !inView
                     })}
                     loading="lazy"
                 />

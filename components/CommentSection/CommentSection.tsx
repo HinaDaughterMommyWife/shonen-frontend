@@ -24,6 +24,12 @@ export default function CommentSection() {
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
+
+          <div className="w-full flex justify-center flex-col gap-xlarge mt-[500px] text-center">
+            <h3 className="text-center font-bold text-3xl">Un Short de "Portal Esperanza", no tiene perdida xd</h3>
+            <h3 className="text-center font-bold text-sm">(bajale el audio a menos de la mitad que yo casi me quedo sordo xd)</h3>
+            <a href="https://www.youtube.com/shorts/Yc5h1oZbeBI" target="_blank" className="underline text-blue-500">https://www.youtube.com/shorts/Yc5h1oZbeBI</a>
+          </div>
           <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
             <img
               src={PEPELU_IMAGE}

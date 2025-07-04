@@ -47,7 +47,7 @@ export default function StatsLiked() {
         </div>
         <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
           <span>
-            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">60%</span>
+            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">61%</span> (esta semana no hice nada porque estaba de flojo)
             <img
               src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
               alt={'shupogaki'}
@@ -55,9 +55,9 @@ export default function StatsLiked() {
               loading="lazy"
             />
           </span>
-          <span>
+          {/*           <span>
             <a
-              href="https://x.com/AnimetrendsLA/status/1938590913007145222"
+              href="https://www.instagram.com/reel/DLV9LBqRSWV/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
               target="_blank"
               className="underline"
             >
@@ -68,8 +68,8 @@ export default function StatsLiked() {
                 loading="lazy"
               /> 👉 (link)
             </a>
-          </span>
-          <span>- GuibelOrgulloPeruano</span>
+          </span> */}
+          <span>- [REDACTED]OrgulloPeruano</span>
         </div>
         <div className="flex flex-col gap-large pt-2xlarge">
           {stats.map((item, index) => (

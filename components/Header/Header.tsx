@@ -44,18 +44,17 @@ export default function Header() {
         )}
       >
         <div className="mx-auto block w-full max-w-[1240px] text-center ">
-          <h2 className="scroll-m-20 border-b pb-2 text-3xl md:text-4xl font-light tracking-tight first:mt-0 font-great-fighter">
+          <h2 className="scroll-m-20 border-b pb-2 text-4xl md:text-5xl font-light tracking-tight first:mt-0 font-great-fighter">
             El Shonen Semanal
           </h2>
           <span className="text-sm text-gray-500/75">
-            Llevo 3 dias de rellolling por Super Creek <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1fda4a1b40094c93af334f8b60868a7c/static/dark/3.0'}
-              alt={'WhySoSerious'}
+            RIP DarkraiNoMola & Darkrai Resumenes <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_4c39207000564711868f3196cc0a8748/static/dark/3.0'}
+              alt={'PoroSad'}
               className="inline h-5 w-5 align-middle"
               loading="lazy"
             />
             <br />
-            <span className="text-xs">(Si estan leyendo esto, es porque aun no la tengo)</span>
           </span>
         </div>
       </header>
