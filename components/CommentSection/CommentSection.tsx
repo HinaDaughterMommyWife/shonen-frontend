@@ -2,7 +2,7 @@
 
 import { useSurveyStore } from '@/store';
 import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
@@ -10,11 +10,12 @@ import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
 import EmoteDecorator from '../EmoteDecorator';
 
-const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsp7QQpTePYPiZUKgdsI4JGNxR20Db3ze9FnTB';
+const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
   let comments = survey?.selectedComments || [];
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const getRotationClass = (index: number) => {
     const rotationStep = index % 4;
@@ -32,22 +33,67 @@ export default function CommentSection() {
     }
   };
 
+  function getColorByIndex(index: number): string {
+    const colors = ['#F87171', '#FBBF24', '#34D399', '#60A5FA', '#C084FC']
+    return colors[index % colors.length]
+  }
+
+
+  useEffect(() => {
+    let offset = 0
+    let animationId: number
+
+    const step = () => {
+      const container = containerRef.current
+      if (!container) return
+
+      offset += 2.5
+      if (offset >= container.scrollWidth / 2) {
+        offset = 0
+      }
+
+      container.scrollLeft = offset
+      animationId = requestAnimationFrame(step)
+    }
+
+    animationId = requestAnimationFrame(step)
+
+    return () => cancelAnimationFrame(animationId)
+  }, [])
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge overflow-x-hidden">
-      <div className="mx-auto block w-full max-w-[1040px]">
-        <div className="flex flex-col gap-large">
-          <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
-          <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
-            <img
-              src={PEPELU_IMAGE}
-              alt={'pepelu'}
-              className={cn('inline h-[180px] w-[180px] align-middle')}
-              loading="lazy"
-            />
+      <div className="flex flex-col gap-large">
+        <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
+        <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
+          <div
+            ref={containerRef}
+            className="w-full overflow-hidden whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {Array.from({ length: 24 }).map((_, i) => (
+              <div key={i} className='px-medium inline-block w-[180px]'>
+                <img
+                  src={PEPELU_IMAGE}
+                  className={cn("object-cover w-full h-full", getRotationClass(i))}
+                  alt="pepelu"
+                  style={
+                    {
+                      filter: `
+                        saturate(${1 + (i % 5) * 0.2})
+                        sepia(1)
+                        hue-rotate(${i * 45}deg)
+                      `,
+                      backgroundColor: getColorByIndex(i),
+                    }
+                  }
+                />
+              </div>
+            ))}
           </div>
-          <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
         </div>
+        <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
+      </div>
+      <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col pt-[120px] gap-[220px]">
           {comments.map((item, index) => (
             <div className="flex flex-col gap-[180px] items-center" key={nanoid()}>

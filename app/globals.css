@@ -112,13 +112,14 @@ body {
 
 
 @keyframes spin-loop {
-  from {
-    transform: rotate3d(1, 0, 0, 360deg);
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
   }
-  to {
-    transform: rotate3d(1, 0, 0, 0deg);
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
   }
 }
+
 
 .break-word {
   overflow-wrap: break-word;

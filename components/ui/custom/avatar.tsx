@@ -32,6 +32,7 @@ export function Avatar({
                     alt={alt}
                     width={size}
                     height={size}
+                    quality={100}
                     className="object-cover w-full h-full"
                     loading="lazy"
                 />

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import Script from 'next/script';
 
@@ -12,6 +13,12 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
+
+const greatFighter = localFont({
+  src: '../fonts/GreatFighter.woff2',
+  variable: '--font-great-fighter',
+});
+
 
 export const metadata: Metadata = {
   title: 'El Shonen Semanal',
@@ -32,7 +39,7 @@ export default async function RootLayout({
         defer
         src="https://assets.onedollarstats.com/stonks.js"
       />
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased ${bodyStyles}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${greatFighter.variable} antialiased ${bodyStyles}`}>
         {children}
       </body>
     </html>

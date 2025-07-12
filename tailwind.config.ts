@@ -14,6 +14,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'great-fighter': ['var(--font-great-fighter)'],
+      },
       screens: {
         xss: '320px',
         xs: '375px',
@@ -91,10 +94,15 @@ export default {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'slider-track': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'spin-wave': 'spin-wave 4s linear infinite',
         'spin-orbit': 'spin-orbit 10s linear infinite',
+        'slider-track': 'slider-track 20s linear infinite',
       },
     },
   },

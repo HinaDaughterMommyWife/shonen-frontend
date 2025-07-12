@@ -40,6 +40,9 @@ export default function StatsLiked() {
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
+      <div className="w-full flex justify-center mb-[100px]">
+        <span className="scroll-m-20 pb-2 text-4xl md:text-5xl font-light font-great-fighter">LAGARTOS!!!</span>
+      </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">
           <h2 className="text-center font-bold text-3xl">
@@ -48,27 +51,6 @@ export default function StatsLiked() {
           <p className="text-center font-bold text-xl text-gray-500">
             Total de votos: {totalScore}
           </p>
-        </div>
-        <div className="flex flex-col gap-medium pt-6xlarge text-sm text-gray-500/75">
-          <span>
-            Nota: Chequeo Automatico de los mangas publicados al <span className="font-bold text-yellow-500  animate-[rainbow_3s_linear_infinite]">50%</span>
-            <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_613b4d23e2e448beb8394b2c9f06b6ac/animated/light/3.0'}
-              alt={'shupogaki'}
-              className="inline h-6 w-6 align-middle"
-              loading="lazy"
-            />
-          </span>
-          {/* <span>
-            <a
-              href="https://youtu.be/hKryb92lWUk"
-              target="_blank"
-              className="underline"
-            >
-              Nota 2: Shupogakis 😭💢 (link)
-            </a>
-          </span> */}
-          <span>- GuibelOrgulloPeruano</span>
         </div>
         <div className="flex flex-col gap-large pt-2xlarge">
           {stats.map((item, index) => (
