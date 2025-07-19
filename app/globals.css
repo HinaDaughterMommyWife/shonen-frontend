@@ -228,3 +228,53 @@ body {
   100% { transform: rotate(0deg); }
 }
 
+
+
+.aura {
+  position: relative;
+  z-index: 1;
+}
+
+.aura::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(255,0,0,0.6) 20%, transparent 80%);
+  filter: blur(35px);
+  transform: translate(-50%, -50%) scale(1);
+  z-index: -1;
+  opacity: 0.5;
+  animation: aura-smoke 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes aura-smoke {
+  0% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0.4;
+    filter: blur(30px);
+  }
+  25% {
+    transform: translate(-48%, -52%) scale(1.05) rotate(3deg);
+    opacity: 0.5;
+    filter: blur(40px);
+  }
+  50% {
+    transform: translate(-51%, -49%) scale(1.1) rotate(-2deg);
+    opacity: 0.6;
+    filter: blur(35px);
+  }
+  75% {
+    transform: translate(-49%, -51%) scale(1.07) rotate(2deg);
+    opacity: 0.45;
+    filter: blur(38px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0.4;
+    filter: blur(30px);
+  }
+}

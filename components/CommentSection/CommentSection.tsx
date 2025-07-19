@@ -9,6 +9,8 @@ import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
 import EmoteDecorator from '../EmoteDecorator';
+import DVDPepelu from './DVDPepelu';
+import DVDMenu from './DVDMenu';
 
 const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 
@@ -65,32 +67,8 @@ export default function CommentSection() {
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge overflow-x-hidden">
       <div className="flex flex-col gap-large">
         <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">Comentarios semanales</h2>
-        <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible">
-          <div
-            ref={containerRef}
-            className="w-full overflow-hidden whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {Array.from({ length: 24 }).map((_, i) => (
-              <div key={i} className='px-medium inline-block w-[180px]'>
-                <img
-                  src={PEPELU_IMAGE}
-                  className={cn("object-cover w-full h-full", getRotationClass(i))}
-                  alt="pepelu"
-                  style={
-                    {
-                      filter: `
-                        saturate(${1 + (i % 5) * 0.2})
-                        sepia(1)
-                        hue-rotate(${i * 45}deg)
-                      `,
-                      backgroundColor: getColorByIndex(i),
-                    }
-                  }
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <DVDPepelu />
+        <DVDMenu />
         <div className="w-full px-8 py-[80px] flex flex-col gap-8" />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
@@ -137,12 +115,12 @@ export default function CommentSection() {
                 <img
                   src={PEPELU_IMAGE}
                   alt={'pepelu'}
-                  className={cn('inline h-[240px] w-[240px] align-middle', getRotationClass(index))}
+                  className={cn('inline h-[240px] w-[240px] align-middle ', getRotationClass(index))}
                   loading="lazy"
                 />
               )}
               {index === comments.length - 2 && (
-                <div className="scene">
+                <div className="scene py-[300px]">
                   <div className="cube">
                     <img
                       src={PEPELU_IMAGE}

@@ -40,8 +40,8 @@ export default function StatsLiked() {
 
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
-      <div className="w-full flex justify-center mb-[100px]">
-        <span className="scroll-m-20 pb-2 text-4xl md:text-5xl font-light font-great-fighter">LAGARTOS!!!</span>
+      <div className="w-full flex justify-center mb-[100px] py-4xlarge">
+        <span className="scroll-m-20 pb-2 text-4xl md:text-7xl font-light font-great-fighter">LAGARTOS!!!</span>
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">

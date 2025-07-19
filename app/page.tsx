@@ -3,6 +3,7 @@ import { EmoteData } from '@/common/emotes';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import TopWindow from '@/components/TopWindow';
+import { DvdProvider } from '@/providers/DvdSettings';
 import StateManagerProvider from '@/providers/StateManager';
 import { Section, useSectionStore } from '@/store';
 import { HistoricalResponse } from '@/store/historical';
@@ -81,9 +82,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
   return (
     <StateManagerProvider initialSection={section}>
-      <Header />
-      <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} emotesData={emoteData} />
-      <TopWindow />
+      <DvdProvider>
+        <Header />
+        <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} emotesData={emoteData} />
+        <TopWindow />
+      </DvdProvider>
     </StateManagerProvider>
   );
 }
