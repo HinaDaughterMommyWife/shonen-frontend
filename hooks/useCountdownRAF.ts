@@ -13,9 +13,34 @@ const getTimeParts = (ms: number) => {
   return { years, days, hours, minutes, seconds, milliseconds };
 };
 
+function formatParts({
+  years,
+  days,
+  hours,
+  minutes,
+  seconds,
+  milliseconds,
+}: ReturnType<typeof getTimeParts>) {
+  const parts: string[] = [];
+
+  if (years > 0) parts.push(`${years} ${years === 1 ? 'Año' : 'Años'}`);
+  if (days > 0) parts.push(`${days} ${days === 1 ? 'Día' : 'Días'}`);
+  if (hours > 0) parts.push(`${pad(hours)} Horas`);
+
+  if (minutes > 0 || parts.length > 0) parts.push(`${pad(minutes)} Minutos`);
+  if (seconds > 0 || parts.length > 0) parts.push(`${pad(seconds)} Segundos`);
+
+  if (milliseconds > 0 || parts.length > 0) parts.push(`${pad(milliseconds, 3)} ms`);
+
+  if (parts.length === 0) return '0 ms';
+
+  if (parts.length === 1) return parts[0];
+
+  return parts.slice(0, -1).join(', ') + ' y ' + parts[parts.length - 1];
+}
+
 export function useCountdownRAF(toUnix: number) {
   const [remaining, setRemaining] = useState(0);
-
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -27,6 +52,12 @@ export function useCountdownRAF(toUnix: number) {
         return Math.abs(prev - diff) > 15 ? diff : prev;
       });
 
+      if (diff < 15) {
+        cancelAnimationFrame(rafRef.current);
+        setRemaining(0);
+        return;
+      }
+
       if (diff > 0) {
         rafRef.current = requestAnimationFrame(update);
       }
@@ -35,15 +66,12 @@ export function useCountdownRAF(toUnix: number) {
     rafRef.current = requestAnimationFrame(update);
 
     return () => {
-      if (rafRef.current !== undefined) {
-        cancelAnimationFrame(rafRef.current);
-      }
+      cancelAnimationFrame(rafRef.current);
     };
   }, [toUnix]);
 
   const timeParts = getTimeParts(remaining);
-
-  const formatted = `${timeParts.years} Años, ${timeParts.days} Días, ${pad(timeParts.hours)} Hor, ${pad(timeParts.minutes)} Min, ${pad(timeParts.seconds)} Seg, ${pad(timeParts.milliseconds, 3)} ms`;
+  const formatted = formatParts(timeParts);
 
   return {
     ...timeParts,

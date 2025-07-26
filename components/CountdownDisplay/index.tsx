@@ -6,7 +6,11 @@ export const CountdownDisplay = ({
 }: {
     toUnix: number;
 }) => {
-    const { formatted } = useCountdownRAF(toUnix);
+    const { formatted, isFinished } = useCountdownRAF(toUnix);
+
+    if (toUnix === 0) return <></>
+
+    if (isFinished) return <>pepelu</>
 
     return (
         <>

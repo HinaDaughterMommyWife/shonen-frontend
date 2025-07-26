@@ -7,7 +7,6 @@ import { sectionData } from '@/common';
 import { useStateManager } from '@/providers/StateManager';
 import { CountdownDisplay } from '../CountdownDisplay';
 
-const TIME_TO_END = 4862282354;
 
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false);
@@ -18,6 +17,13 @@ export default function Header() {
 
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
+
+  const [timeToEnd, setTimeToEnd] = useState(0);
+
+  useEffect(() => {
+    // add current unix time to timeToEnd and add 30 minutes
+    setTimeToEnd((Date.now() + 800000) / 1000);
+  }, []);
 
   /* useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => setIsSticky(!entry.isIntersecting), {
@@ -51,16 +57,16 @@ export default function Header() {
             El Shonen Semanal
           </h2>
           <span className="text-sm text-gray-500/75">
-            Tiempo de Vida Restante del Shonen Semanal <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1fda4a1b40094c93af334f8b60868a7c/static/dark/3.0'}
-              alt={'WhySoSerious'}
+            Tiempo restante para que Darkrai se vaya a la cama <img
+              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_10fbf371421b4126abb0a04a55f7e216/animated/light/3.0'}
+              alt={'erickdbzPadaparasha'}
               className="inline h-5 w-5 align-middle"
               loading="lazy"
             /> 👇
           </span>
           <br />
           <span className="text-sm text-gray-500/75">
-            <CountdownDisplay toUnix={TIME_TO_END} />
+            <CountdownDisplay toUnix={timeToEnd} />
           </span>
         </div>
       </header>
