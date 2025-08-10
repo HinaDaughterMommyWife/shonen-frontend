@@ -10,7 +10,9 @@ import { CountdownDisplay } from '../CountdownDisplay';
 
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false);
-  const { sectionPage, setSectionPage } = useStateManager()
+  const { sectionPage, setSectionPage, headerUnixTime } = useStateManager()
+
+  console.log(headerUnixTime)
 
   const sections = Object.values(sectionData).sort((a, b) => a.order - b.order);
   const currentIndex = sections.findIndex((s) => s.order === sectionData[sectionPage]?.order);
@@ -18,12 +20,6 @@ export default function Header() {
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 
-  const [timeToEnd, setTimeToEnd] = useState(0);
-
-  useEffect(() => {
-    // add current unix time to timeToEnd and add 30 minutes
-    setTimeToEnd((Date.now() + 800000) / 1000);
-  }, []);
 
   /* useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => setIsSticky(!entry.isIntersecting), {
@@ -66,7 +62,7 @@ export default function Header() {
           </span>
           <br />
           <span className="text-sm text-gray-500/75">
-            <CountdownDisplay toUnix={timeToEnd} />
+            <CountdownDisplay toUnix={headerUnixTime} />
           </span>
         </div>
       </header>

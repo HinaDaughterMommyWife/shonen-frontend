@@ -1,16 +1,13 @@
 import { JSX, useMemo, useState } from 'react'
 import { StateManagerContext } from './StateManager.context'
 import { Section } from '@/store';
-
-interface StateManagerProviderProps {
-  initialSection: Section;
-  children: React.ReactNode;
-}
+import { StateManagerStateProps } from './StateManager.types';
 
 export default function StateManagerProvider({
   initialSection,
   children,
-}: Readonly<StateManagerProviderProps>): JSX.Element {
+  headerUnixTime,
+}: Readonly<StateManagerStateProps>): JSX.Element {
 
   const [sectionPage, setSectionPage] = useState(initialSection);
 
@@ -18,6 +15,7 @@ export default function StateManagerProvider({
     () => ({
       sectionPage,
       setSectionPage,
+      headerUnixTime,
     }),
     [sectionPage]
   )

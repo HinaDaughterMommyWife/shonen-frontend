@@ -23,6 +23,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
   let emoteData: Record<string, EmoteData>;
 
+  let headerUnixTime = (Date.now() + 1000000) / 1000;
+
   try {
     const resSurvey = await fetch(URLS.API + '/survey/lastKey', {
       next: { revalidate: 800, tags: ['survey'] },
@@ -81,7 +83,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
   const section = (params.section || Section.LIKED) as Section;
 
   return (
-    <StateManagerProvider initialSection={section}>
+    <StateManagerProvider initialSection={section} headerUnixTime={headerUnixTime}>
       <DvdProvider>
         <Header />
         <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} emotesData={emoteData} />

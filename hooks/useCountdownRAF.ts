@@ -40,7 +40,9 @@ function formatParts({
 }
 
 export function useCountdownRAF(toUnix: number) {
-  const [remaining, setRemaining] = useState(0);
+  let initialCurrentTime = toUnix - 1000000;
+
+  const [remaining, setRemaining] = useState(toUnix - initialCurrentTime);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {

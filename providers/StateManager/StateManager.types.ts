@@ -1,10 +1,14 @@
 import { Section } from '@/store';
 
-export interface StateManagerProviderProps {
+export interface StateManagerStateProps {
   initialSection: Section;
+  headerUnixTime: number;
+  children: React.ReactNode;
+}
+
+export interface StateManagerProviderProps extends StateManagerStateProps {
   sectionPage: Section;
   setSectionPage: (section: Section) => void;
-  children: React.ReactNode;
 }
 
 export interface StateManagerContextProps
