@@ -9,6 +9,7 @@ import { Section, useSectionStore } from '@/store';
 import { HistoricalResponse } from '@/store/historical';
 import { CloudInterface, SurveyResponse } from '@/store/survey';
 import { unpack } from 'msgpackr';
+import { TextQueueProvider } from '../providers/TextQueueContext';
 
 interface SearchParams {
   section: string;
@@ -37,20 +38,20 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
     const resExperimental = await fetch(URLS.API + '/experiment/cloud-1', {
       next: { revalidate: 800, tags: ['experimental'] },
-    })
+    });
 
     dataExperimental = await resExperimental.json();
 
     const resEmotedDataBuffer = await fetch(
-      "https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2"
-      , {
-        next: { revalidate: 3600, tags: ['emoteData'] }
-      })
+      'https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2',
+      {
+        next: { revalidate: 3600, tags: ['emoteData'] },
+      },
+    );
 
     const emoteArrayBuffer = await resEmotedDataBuffer.arrayBuffer();
 
     emoteData = unpack(new Uint8Array(emoteArrayBuffer)) as Record<string, EmoteData>;
-
   } catch (e) {
     dataSurvey = {
       favorite_chapters: {
@@ -82,11 +83,19 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
   return (
     <StateManagerProvider initialSection={section}>
-      <DvdProvider>
-        <Header />
-        <Main historicalData={dataHistorical} surveyData={dataSurvey} responseStatus={statusData} experimentalData={dataExperimental} emotesData={emoteData} />
-        <TopWindow />
-      </DvdProvider>
+      <TextQueueProvider>
+        <DvdProvider>
+          <Header />
+          <Main
+            historicalData={dataHistorical}
+            surveyData={dataSurvey}
+            responseStatus={statusData}
+            experimentalData={dataExperimental}
+            emotesData={emoteData}
+          />
+          <TopWindow />
+        </DvdProvider>
+      </TextQueueProvider>
     </StateManagerProvider>
   );
 }

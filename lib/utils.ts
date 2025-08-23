@@ -24,3 +24,12 @@ export function reorderScores(scores: Record<string, number>): Record<string, nu
 
   return rankedScores;
 }
+
+export const isJSON = (str: string) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch {
+    return false;
+  }
+};

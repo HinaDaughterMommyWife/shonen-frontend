@@ -1,16 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Section, useSectionStore } from '@/store';
 import { sectionData } from '@/common';
 import { useStateManager } from '@/providers/StateManager';
 import { CountdownDisplay } from '../CountdownDisplay';
+import { useTextQueue } from '../../providers/TextQueueContext';
+import EmoteDecorator from '../EmoteDecorator';
+import { cn, isJSON } from '../../lib/utils';
 
+const ANIMATION_DURATION = 1500;
+
+const WS_URL = 'wss://kentucky-runner-crossing-overhead.trycloudflare.com';
+
+interface TextItem {
+  id: string;
+  message: string;
+  lastMessage: string;
+  totalMessages: number;
+}
 
 export default function Header() {
+  const { queue, enqueue } = useTextQueue();
+
   const [isSticky, setIsSticky] = useState(false);
-  const { sectionPage, setSectionPage } = useStateManager()
+  const { sectionPage, setSectionPage } = useStateManager();
+  const wsRef = useRef<WebSocket | null>(null);
+  const [totalMessages, setTotalMessages] = useState(0);
 
   const sections = Object.values(sectionData).sort((a, b) => a.order - b.order);
   const currentIndex = sections.findIndex((s) => s.order === sectionData[sectionPage]?.order);
@@ -21,27 +38,58 @@ export default function Header() {
   const [timeToEnd, setTimeToEnd] = useState(0);
 
   useEffect(() => {
-    // add current unix time to timeToEnd and add 30 minutes
     setTimeToEnd((Date.now() + 800000) / 1000);
   }, []);
+  // useffect connect websocket, and send echo every 5 s
 
-  /* useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setIsSticky(!entry.isIntersecting), {
-      threshold: 0,
-    });
+  useEffect(() => {
+    const ws = new WebSocket(WS_URL);
+    wsRef.current = ws;
 
-    const header = document.getElementById('main-header');
-    if (header) observer.observe(header);
+    ws.onopen = () => {
+      console.log('✅ Conectado al WebSocket');
+    };
 
-    return () => observer.disconnect();
+    ws.onmessage = (event) => {
+      const message = event.data;
+
+      if (typeof message !== 'string') {
+        console.warn('Error: ', message);
+        return;
+      }
+
+      if (isJSON(message)) {
+        const data = JSON.parse(message) as TextItem;
+
+        if (data.message || data.lastMessage) {
+          enqueue(data.message || data.lastMessage);
+        }
+
+        if (data.totalMessages) {
+          setTotalMessages(data.totalMessages);
+        }
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error('❌ Error en WebSocket:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('🔌 Conexión cerrada');
+    };
+
+    const interval = setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send('ping');
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      ws.close();
+    };
   }, []);
-
-  const handleChangeSection = (section: Section) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      setSectionPage(section);
-    }, 800);
-  }; */
 
   return (
     <>
@@ -56,56 +104,53 @@ export default function Header() {
           <h2 className="scroll-m-20 border-b pb-2 text-4xl md:text-5xl font-light tracking-tight first:mt-0 font-great-fighter">
             El Shonen Semanal
           </h2>
-          <span className="text-sm text-gray-500/75">
-            Tiempo restante para que Darkrai se vaya a la cama <img
-              src={'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_10fbf371421b4126abb0a04a55f7e216/animated/light/3.0'}
-              alt={'erickdbzPadaparasha'}
-              className="inline h-5 w-5 align-middle"
-              loading="lazy"
-            /> 👇
-          </span>
-          <br />
-          <span className="text-sm text-gray-500/75">
-            <CountdownDisplay toUnix={timeToEnd} />
-          </span>
+          <div className="mt-2">
+            <span className="font-semibold">
+              Ultimo Mensaje de Robraas (&nbsp;
+              <img
+                src={
+                  'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_0e109fdbe7394201924a2189264530aa/static/light/3.0'
+                }
+                alt={'pepelu'}
+                className="inline h-5 w-5 align-middle"
+                loading="lazy"
+              />{" "}
+              )<span className="text-xs text-gray-500">&nbsp;&nbsp;En tiempo real</span>
+              <span className="inline-flex items-center ml-2">
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500 animate-ping mr-1"></span>
+                <span className="absolute inline-flex h-2 w-2 rounded-full bg-red-500 opacity-75"></span>
+              </span>
+            </span>
+          </div>
+          <div className="relative w-full md:min-h-[70px] min-h-[120px] overflow-hidden flex items-center justify-center fade-vertical">
+            {queue.map((item) => (
+              <span
+                key={item.id}
+                className={clsx(
+                  'absolute w-full text-center p-1',
+                  item.status === 'entering' && 'animate-slideDown',
+                  item.status === 'exiting' && 'animate-slideUp',
+                )}
+                style={{ animationDuration: `${ANIMATION_DURATION}ms` }}
+              >
+                <EmoteDecorator displaySize={20}>{item.text}</EmoteDecorator>
+              </span>
+            ))}
+          </div>
+          <div
+            className={cn(
+              'flex justify-center opacity-0 transition-opacity duration-1000 ease-in-out',
+              {
+                'opacity-100': totalMessages !== 0,
+              },
+            )}
+          >
+            <span className="text-sm text-gray-500">
+              Total mensajes enviados por Robraas: {totalMessages}
+            </span>
+          </div>
         </div>
       </header>
-      {/* <div
-        className={clsx(
-          'fixed top-0 left-0 w-full bg-slate-900 shadow-md transition-all duration-300 z-50 py-medium',
-          isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full',
-        )}
-      >
-        <div className="mx-auto w-full max-w-[1440px] px-medium py-2 flex items-center justify-between">
-          <div className="md:w-[320px] w-[160px] flex justify-start">
-            {prevSection && (
-              <button
-                {...{ 'data-s:event': `click-header-${prevSection.key}` }}
-                onClick={() => handleChangeSection(prevSection.key)}
-                className="px-medium py-small bg-gray-700 text-white text-sm rounded-full hover:bg-gray-600 transition"
-              >
-                <span className="md:block hidden"> ← {prevSection.tinyTitle}</span>
-                <span className="md:hidden">{prevSection.icon}</span>
-              </button>
-            )}
-          </div>
-          <h2 className="sm:text-xl text-base font-semibold text-center px-large">
-            {sectionData[sectionPage]?.title}
-          </h2>
-          <div className="md:w-[320px] w-[160px] flex justify-end">
-            {nextSection && (
-              <button
-                {...{ 'data-s:event': `click-header-${nextSection.key}` }}
-                onClick={() => handleChangeSection(nextSection.key)}
-                className="px-medium py-small bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition"
-              >
-                <span className="md:block hidden"> {nextSection.tinyTitle} →</span>
-                <span className="md:hidden"> {nextSection.icon}</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }
