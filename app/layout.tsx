@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import Script from 'next/script';
+import Head from 'next/head';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,6 +40,12 @@ export default async function RootLayout({
         defer
         src="https://assets.onedollarstats.com/stonks.js"
       />
+      <head>
+        <script
+          crossOrigin="anonymous"
+          src="//unpkg.com/react-scan/dist/auto.global.js"
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${greatFighter.variable} antialiased ${bodyStyles}`}>
         {children}
       </body>

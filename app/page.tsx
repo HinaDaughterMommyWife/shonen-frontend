@@ -84,7 +84,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
   return (
     <StateManagerProvider initialSection={section}>
       <TextQueueProvider>
-        <DvdProvider>
           <Header />
           <Main
             historicalData={dataHistorical}
@@ -94,7 +93,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
             emotesData={emoteData}
           />
           <TopWindow />
-        </DvdProvider>
       </TextQueueProvider>
     </StateManagerProvider>
   );

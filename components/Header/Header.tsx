@@ -35,13 +35,6 @@ export default function Header() {
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 
-  const [timeToEnd, setTimeToEnd] = useState(0);
-
-  useEffect(() => {
-    setTimeToEnd((Date.now() + 800000) / 1000);
-  }, []);
-  // useffect connect websocket, and send echo every 5 s
-
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
     wsRef.current = ws;
