@@ -40,12 +40,6 @@ export default async function RootLayout({
         defer
         src="https://assets.onedollarstats.com/stonks.js"
       />
-      <head>
-        <script
-          crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-        />
-      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${greatFighter.variable} antialiased ${bodyStyles}`}>
         {children}
       </body>

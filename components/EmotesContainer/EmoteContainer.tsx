@@ -18,9 +18,7 @@ const TWITCH_ID = '57105861';
 
 const MAX_EMOTE_QUEUE_SIZE = 50;
 
-declare global {
-  var __tmiClientInitialized: boolean | undefined;
-}
+const LIMIT_EMOTES = 4;
 
 export default function EmoteContainer() {
   const [emoteQueue, setEmoteQueue] = useState<EmoteEntry[]>([]);
@@ -63,24 +61,6 @@ export default function EmoteContainer() {
     return currentQueue;
   }, []);
 
-  /* useEffect(() => {
-    let dummyMessage = {
-      id: crypto.randomUUID(),
-      src: 'https://cdn.7tv.app/emote/01GJNYTETG000FHRQM9JGT9YVA/1x.webp',
-      animated: true,
-      width: 69,
-      height: 32,
-      isTwitch: false,
-    };
-    const interval = setInterval(() => {
-      setEmoteQueue((prev) => cleanupQueue([...prev, dummyMessage]));
-    }, 200);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [emoteQueue, cleanupQueue]); */
-
   const onEmoteEnd = useCallback(
     (id: string) => {
       setEmoteQueue((prev) => cleanupQueue(prev.filter((e) => e.id !== id)));
@@ -89,7 +69,6 @@ export default function EmoteContainer() {
   );
 
   useEffect(() => {
-    if (globalThis.__tmiClientInitialized) return;
     if (!clientRef.current) {
       const client = new tmi.Client({
         connection: { secure: true, reconnect: true, timeout: 10000 },
@@ -97,7 +76,6 @@ export default function EmoteContainer() {
       });
 
       client.connect().catch(console.warn);
-      globalThis.__tmiClientInitialized = true;
       clientRef.current = client;
     }
 
@@ -107,8 +85,15 @@ export default function EmoteContainer() {
 
       const newEmotes: EmoteEntry[] = [];
 
+      let countEmotes = 0;
+
       if (tags.emotes) {
         Object.keys(tags.emotes).forEach((emoteId) => {
+          if (countEmotes >= LIMIT_EMOTES) {
+            return;
+          }
+          countEmotes++;
+
           const id = crypto.randomUUID();
           newEmotes.push({
             id,
@@ -122,6 +107,7 @@ export default function EmoteContainer() {
       }
 
       let sevenTVMap: Record<string, EmoteEntry> = {};
+      let sevenEmoteIndex = 0;
 
       for (const word of message.split(/\s+/)) {
         const sevenTVEmote = sevenTVEmotesRef.current[word];
@@ -130,7 +116,8 @@ export default function EmoteContainer() {
           const preferred = sevenTVEmote.animated
             ? sevenTVEmote.urls.find((u) => u.endsWith('.webp')) || sevenTVEmote.urls.at(0)
             : sevenTVEmote.urls.at(0);
-          if (preferred) {
+          if (preferred && sevenEmoteIndex <= LIMIT_EMOTES - 1) {
+            sevenEmoteIndex++;
             sevenTVMap[word] = {
               id: id,
               src: preferred,
@@ -138,7 +125,7 @@ export default function EmoteContainer() {
               width: sevenTVEmote.width,
               height: sevenTVEmote.height,
               isTwitch: false,
-            };
+            }; 
           }
         }
       }
@@ -155,7 +142,8 @@ export default function EmoteContainer() {
     clientRef.current?.on('message', onMessageHandler);
 
     return () => {
-      clientRef.current?.disconnect().catch(console.warn);
+      clientRef.current?.removeListener('message', onMessageHandler);
+      clientRef.current?.disconnect().catch(console.warn).finally(() => (clientRef.current = null));
       clientRef.current = null;
     };
   }, []);

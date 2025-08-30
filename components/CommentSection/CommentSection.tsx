@@ -10,8 +10,10 @@ import remarkHtml from 'remark-html';
 import { cn } from '@/lib/utils';
 import EmoteDecorator from '../EmoteDecorator';
 import EmoteContainer from '../EmotesContainer/EmoteContainer';
+import Image from 'next/image';
 
 const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
+const LABUBU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsWZc56RnLWVlN6XqPtiSm9Jpa54byjE3hnGu1';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
@@ -69,18 +71,7 @@ export default function CommentSection() {
           Comentarios semanales
         </h2>
         <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
-        <div>
-          <h2 className="text-3xl font-bold text-center">Experimento - Emotes en Pantalla</h2>
-          <span className="block text-center text-gray-500 text-xs mt-2">
-            Se esta mostrando los emotes que se estan escribiendo en el chat de Twitch. Se me ocurrio ayer y me parecio divertido hacerlo
-          </span>
-          <span className="block text-center text-gray-500 text-xs mt-2">
-            Estoy probando cosas, asi que si falla algo perdon xd
-          </span>
-        </div>
       </div>
-      <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
-
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col pt-[120px] gap-[220px]">
           {comments.map((item, index) => (
@@ -126,51 +117,27 @@ export default function CommentSection() {
               </div>
               {index < comments.length - 2 && (
                 <img
-                  src={PEPELU_IMAGE}
+                  src={LABUBU_IMAGE}
                   alt={'pepelu'}
                   className={cn(
-                    'inline h-[240px] w-[240px] align-middle ',
+                    'inline h-[300px] w-[240px] align-middle ',
                     getRotationClass(index),
                   )}
                   loading="lazy"
                 />
               )}
               {index === comments.length - 2 && (
-                <div className="scene py-[300px]">
-                  <div className="cube">
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face front animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face back animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face left animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face right animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face top animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                    <img
-                      src={PEPELU_IMAGE}
-                      alt="Pepelu"
-                      className="cube-face bottom animate-[rainbow_3s_linear_infinite] filter brightness-150 contrast-125 saturate-200"
-                    />
-                  </div>
-                </div>
-              )}
+                <>
+                <Image
+                  src={"https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsaKnMIIdIe6DPKJbANLT1t79HRaZkMfWS3iF8"}
+                  alt="Deltarun"
+                  width={400}
+                  height={600}
+                  className="inline py-[300px] align-middle"
+                  loading="lazy"
+                /> 
+              </>
+            )}
             </div>
           ))}
         </div>

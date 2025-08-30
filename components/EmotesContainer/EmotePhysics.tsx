@@ -217,8 +217,6 @@ export default function EmotePhysics({ emotes, onEmoteEnd }: EmotePhysicsProps) 
           x: forceMagnitude * Math.cos(angle),
           y: forceMagnitude * Math.sin(angle),
         });
-
-        console.log(emotes);
       },
     );
   }, [emotes, onEmoteEnd]);
