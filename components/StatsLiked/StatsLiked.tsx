@@ -42,7 +42,7 @@ export default function StatsLiked() {
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
       <div className="w-full flex justify-center mb-[100px] py-[140px] px-5xlarge">
-        <Image src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsa90Moe6dIe6DPKJbANLT1t79HRaZkMfWS3iF" alt="Like" width={600} height={500} />
+        <Image src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsa90Moe6dIe6DPKJbANLT1t79HRaZkMfWS3iF" alt="Like" width={600} height={500} className='hue-rotate-[200deg] saturate-200' />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">

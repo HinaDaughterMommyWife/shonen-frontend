@@ -14,6 +14,7 @@ import Image from 'next/image';
 
 const PEPELU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs5jE07XQRLHr4spidyZSq0co8UYMh2EOK9NkJ';
 const LABUBU_IMAGE = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsWZc56RnLWVlN6XqPtiSm9Jpa54byjE3hnGu1';
+const SHUPO_GIF = 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsWNDrrUpnLWVlN6XqPtiSm9Jpa54byjE3hnGu';
 
 export default function CommentSection() {
   const { survey } = useSurveyStore();
@@ -70,6 +71,14 @@ export default function CommentSection() {
         <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">
           Comentarios semanales
         </h2>
+        <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
+        <div className="flex flex-col">
+          <h2 className="text-3xl font-bold text-center">Mi humilde Aportación</h2>
+          <Image src={SHUPO_GIF} alt="Shupo" width={200} height={200} className="mx-auto py-8" />
+          <a href="https://wplace.live/?lat=42.11159023015992&lng=-7.928877284472664&zoom=15.95743040325799" target='_blank' rel="noopener noreferrer" className="block text-center text-blue-500 text-2xl mt-2">
+            (link)
+          </a>
+        </div>
         <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
@@ -128,16 +137,18 @@ export default function CommentSection() {
               )}
               {index === comments.length - 2 && (
                 <>
-                <Image
-                  src={"https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsaKnMIIdIe6DPKJbANLT1t79HRaZkMfWS3iF8"}
-                  alt="Deltarun"
-                  width={400}
-                  height={600}
-                  className="inline py-[300px] align-middle"
-                  loading="lazy"
-                /> 
-              </>
-            )}
+                  <Image
+                    src={
+                      'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsaKnMIIdIe6DPKJbANLT1t79HRaZkMfWS3iF8'
+                    }
+                    alt="Deltarun"
+                    width={400}
+                    height={600}
+                    className="inline py-[300px] align-middle"
+                    loading="lazy"
+                  />
+                </>
+              )}
             </div>
           ))}
         </div>
