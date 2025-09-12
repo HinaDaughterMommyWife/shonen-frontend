@@ -8,7 +8,7 @@ import { ViewType } from '@/store/stats';
 import { useSurveyStore } from '@/store';
 import { MANGAS } from '@/common/mangas';
 import { StatItem } from '../StatItem';
-import { reorderScores } from '@/lib/utils';
+import { cn, reorderScores } from '@/lib/utils';
 import WavyText from '../ui/wobble';
 import Image from 'next/image';
 
@@ -39,10 +39,15 @@ export default function StatsLiked() {
 
   const positionScore = reorderScores(survey.favorite_chapters);
 
+  const topTeam = stats[0]?.team;
+  const isRedTeam = topTeam === 'red';
+
   return (
     <section className="w-full px-medium sm:px-4xlarge md:px-5xlarge md:py-8xlarge lg:px-9xlarge xlg:px-0 py-2xlarge">
       <div className="w-full flex justify-center mb-[100px] py-[140px] px-5xlarge">
-        <Image src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsa90Moe6dIe6DPKJbANLT1t79HRaZkMfWS3iF" alt="Like" width={600} height={500} className='hue-rotate-[200deg] saturate-200' />
+        <Image src="https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsa90Moe6dIe6DPKJbANLT1t79HRaZkMfWS3iF" alt="Like" width={600} height={500} className={cn({
+          'hue-rotate-[200deg] saturate-200' : !isRedTeam,
+        })}/>
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col gap-large">

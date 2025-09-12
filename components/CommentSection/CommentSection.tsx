@@ -72,14 +72,6 @@ export default function CommentSection() {
           Comentarios semanales
         </h2>
         <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
-        <div className="flex flex-col">
-          <h2 className="text-3xl font-bold text-center">Mi humilde Aportación</h2>
-          <Image src={SHUPO_GIF} alt="Shupo" width={200} height={200} className="mx-auto py-8" />
-          <a href="https://wplace.live/?lat=42.11159023015992&lng=-7.928877284472664&zoom=15.95743040325799" target='_blank' rel="noopener noreferrer" className="block text-center text-blue-500 text-2xl mt-2">
-            (link)
-          </a>
-        </div>
-        <div className="w-full px-8 py-[180px] flex flex-col gap-8" />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col pt-[120px] gap-[220px]">
