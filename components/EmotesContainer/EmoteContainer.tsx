@@ -17,13 +17,23 @@ const TWITCH_CHANNEL = 'thedarkraimola';
 const TWITCH_ID = '57105861';
 
 const MAX_EMOTE_QUEUE_SIZE = 50;
-
 const LIMIT_EMOTES = 4;
 
 export default function EmoteContainer() {
   const [emoteQueue, setEmoteQueue] = useState<EmoteEntry[]>([]);
   const clientRef = useRef<tmi.Client | null>(null);
   const sevenTVEmotesRef = useRef<Record<string, SevenTVEmote>>({});
+  const isPageVisible = useRef(true);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      isPageVisible.current = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchEmotes = async () => {
@@ -43,7 +53,6 @@ export default function EmoteContainer() {
               height: emote.data.host.files[0].height,
             };
           }
-
           sevenTVEmotesRef.current = sevenTVEmoteMap;
         }
       } catch (err) {
@@ -82,9 +91,11 @@ export default function EmoteContainer() {
     // @ts-ignore
     const onMessageHandler = (channel, tags, message, self) => {
       if (!tags || self) return;
+      if (!isPageVisible.current) {
+        return;
+      }
 
       const newEmotes: EmoteEntry[] = [];
-
       let countEmotes = 0;
 
       if (tags.emotes) {
@@ -146,7 +157,7 @@ export default function EmoteContainer() {
       clientRef.current?.disconnect().catch(console.warn).finally(() => (clientRef.current = null));
       clientRef.current = null;
     };
-  }, []);
+  }, [cleanupQueue]);
 
   return <EmotePhysics emotes={emoteQueue} onEmoteEnd={onEmoteEnd} />;
 }
