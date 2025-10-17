@@ -74,45 +74,29 @@ export default function CommentSection() {
         <h2 className="text-center font-bold text-6xl my-[80px] max-md:text-4xl">
           Comentarios semanales
         </h2>
-        <div className="w-full px-8 py-[250px] flex flex-col gap-8" />
-        <div className="w-full h-[400px] md:h-[600px] flex items-center justify-center md:mt-[450px] mt-[250px] md:mb-[250px] mb-[150px] overflow-visible flex-col gap-4xlarge">
-          <span
-            className={cn(
-              'text-4xl font-bold aura text-red-500 opacity-100 transition-opacity duration-1000 ease-in-out delay-500 text-center',
-              {
-                'opacity-0': isPepeluClicked,
-                hidden: isAfterTimeout,
-              },
-            )}
+        <div className="w-full px-8 py-[250px] flex flex-col" />
+        <div className="w-full h-[200px] flex items-center justify-center overflow-visible flex-col gap-large">
+         <EmoteDecorator displaySize={38}>
+           <span
+            className={"text-3xl font-bold text-center"}
           >
-            NO HAGAS CLICK AL PEPELU
+            No se si ya viste este Tweet, por la dudas lo dejo acá darkraiDogkrai :
           </span>
           <a
-            href="https://x.com/Rainmaker1973/status/1962746469053595821"
+            href="https://x.com/atletienglish/status/1978013751350534585"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
               setIsPepeluClicked(true);
               afterTimeout();
             }}
-            className={cn('transition-opacity duration-1000 ease-in-out delay-500', {
-              'opacity-0': isPepeluClicked,
-              hidden: isAfterTimeout,
-            })}
+            className={"text-3xl font-bold text-blue-500 underline"}
           >
-            <img src={PEPELU_IMAGE} alt="pepelu" className={cn('inline w-[120px]')} />
+            (link) ilarjYes
           </a>
-          <img
-            src={'https://media1.tenor.com/m/5_8YVvgDhBcAAAAd/hikari-blue-archive.gif'}
-            alt="shupo"
-            className={cn(
-              'transition-opacity duration-1000 ease-in-out delay-500 opacity-0 w-[340px] mb-[800px]',
-              {
-                'opacity-100': isAfterTimeout,
-              },
-            )}
-          />
+         </EmoteDecorator>
         </div>
+        <div className="w-full px-8 py-[250px] flex flex-col" />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col pt-[120px] gap-[220px]">

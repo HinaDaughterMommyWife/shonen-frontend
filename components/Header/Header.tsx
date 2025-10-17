@@ -35,6 +35,8 @@ export default function Header() {
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 
+  let totalMessageString = Number(totalMessages).toLocaleString('en-US');
+
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
     wsRef.current = ws;
@@ -139,7 +141,7 @@ export default function Header() {
             )}
           >
             <span className="text-sm text-gray-500">
-              Total mensajes enviados por Robraas: {totalMessages}
+              Total mensajes enviados por Robraas: {totalMessageString}
             </span>
           </div>
         </div>
