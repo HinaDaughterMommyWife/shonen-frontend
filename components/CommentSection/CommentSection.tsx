@@ -76,25 +76,31 @@ export default function CommentSection() {
         </h2>
         <div className="w-full px-8 py-[250px] flex flex-col" />
         <div className="w-full h-[200px] flex items-center justify-center overflow-visible flex-col gap-large">
-         <EmoteDecorator displaySize={38}>
-           <span
-            className={"text-3xl font-bold text-center"}
-          >
-            No se si ya viste este Tweet, por la dudas lo dejo acá darkraiDogkrai :
-          </span>
-          <a
-            href="https://x.com/atletienglish/status/1978013751350534585"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              setIsPepeluClicked(true);
-              afterTimeout();
-            }}
-            className={"text-3xl font-bold text-blue-500 underline"}
-          >
-            (link) ilarjYes
-          </a>
-         </EmoteDecorator>
+          <EmoteDecorator displaySize={24}>
+            <span className={'text-xl font-bold text-center'}>
+              Una recomendación para la lista de GodTube, facil 50k de visitas la resubida
+              WhySoSerious
+            </span>
+            <a
+              href="https://youtu.be/3Ubj99QvjKA"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setIsPepeluClicked(true);
+                afterTimeout();
+              }}
+              className={'text-xl font-bold text-blue-500 underline'}
+            >
+              ilarjClap (link) ilarjClap_MIRROR
+            </a>
+          </EmoteDecorator>
+          <div className="opacity-40">
+            <EmoteDecorator displaySize={16}>
+              <span className={'text-xs text-gray-500 italic'}>
+                Si te espanta el titulo, ignora la recomendación PotFriend
+              </span>
+            </EmoteDecorator>
+          </div>
         </div>
         <div className="w-full px-8 py-[250px] flex flex-col" />
       </div>
@@ -141,6 +147,16 @@ export default function CommentSection() {
                   {item.replace(/\n/gi, '&nbsp; \n')}
                 </ReactMarkdown>
               </div>
+              {index === 3 && (
+                <div className='opacity-50'>
+                  <EmoteDecorator displaySize={24}>
+                    <span className="italic font-semibold">
+                      Corregi este comentario (tenia los emotes juntos), no se olviden separar los
+                      emotes darkraiSapoweon
+                    </span>
+                  </EmoteDecorator>
+                </div>
+              )}
               {index < comments.length - 2 && (
                 <img
                   src={LABUBU_IMAGE}

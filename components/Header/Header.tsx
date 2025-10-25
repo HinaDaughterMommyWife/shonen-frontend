@@ -109,7 +109,7 @@ export default function Header() {
                 alt={'pepelu'}
                 className="inline h-5 w-5 align-middle"
                 loading="lazy"
-              />{" "}
+              />{' '}
               )<span className="text-xs text-gray-500">&nbsp;&nbsp;En tiempo real</span>
               <span className="inline-flex items-center ml-2">
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500 animate-ping mr-1"></span>
@@ -140,9 +140,11 @@ export default function Header() {
               },
             )}
           >
-            <span className="text-sm text-gray-500">
-              Total mensajes enviados por Robraas: {totalMessageString}
-            </span>
+            <EmoteDecorator displaySize={16}>
+              <span className="text-sm text-gray-500">
+                Total mensajes enviados por Robraas: {totalMessageString} &nbsp; ddanny1Laugh
+              </span>
+            </EmoteDecorator>
           </div>
         </div>
       </header>
