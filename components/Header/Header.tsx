@@ -140,11 +140,9 @@ export default function Header() {
               },
             )}
           >
-            <EmoteDecorator displaySize={16}>
               <span className="text-sm text-gray-500">
-                Total mensajes enviados por Robraas: {totalMessageString} &nbsp; ddanny1Laugh
+                Total mensajes enviados por Robraas: {totalMessageString}
               </span>
-            </EmoteDecorator>
           </div>
         </div>
       </header>

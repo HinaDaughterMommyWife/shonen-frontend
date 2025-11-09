@@ -75,34 +75,6 @@ export default function CommentSection() {
           Comentarios semanales
         </h2>
         <div className="w-full px-8 py-[250px] flex flex-col" />
-        <div className="w-full h-[200px] flex items-center justify-center overflow-visible flex-col gap-large">
-          <EmoteDecorator displaySize={24}>
-            <span className={'text-xl font-bold text-center'}>
-              Una recomendación para la lista de GodTube, facil 50k de visitas la resubida
-              WhySoSerious
-            </span>
-            <a
-              href="https://youtu.be/3Ubj99QvjKA"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                setIsPepeluClicked(true);
-                afterTimeout();
-              }}
-              className={'text-xl font-bold text-blue-500 underline'}
-            >
-              ilarjClap (link) ilarjClap_MIRROR
-            </a>
-          </EmoteDecorator>
-          <div className="opacity-40">
-            <EmoteDecorator displaySize={16}>
-              <span className={'text-xs text-gray-500 italic'}>
-                Si te espanta el titulo, ignora la recomendación PotFriend
-              </span>
-            </EmoteDecorator>
-          </div>
-        </div>
-        <div className="w-full px-8 py-[250px] flex flex-col" />
       </div>
       <div className="mx-auto block w-full max-w-[1040px]">
         <div className="flex flex-col pt-[120px] gap-[220px]">
