@@ -162,6 +162,18 @@ export const MANGAS: Record<string, Manga> = {
     team: 'red',
     avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsPtceX26lAoc0ziTZFdDsrGXx1w7JqtVbkMOK',
   },
+  'fate-type-redline': {
+    id: 'fate-type-redline',
+    title: 'Fate/Type Redline',
+    team: 'red',
+    avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsPTGVII6lAoc0ziTZFdDsrGXx1w7JqtVbkMOK',
+  },
+  'uma-star-blossom': {
+    id: 'uma-star-blossom',
+    title: 'Uma Musume: Star Blossom',
+    team: 'red',
+    avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBs1extbz4P0UjKIpmOYNRwzeElc3r4AkdBnMDa',
+  },
   'vanitas-no-carte': {
     id: 'vanitas-no-carte',
     title: 'Vanitas no Carte',
