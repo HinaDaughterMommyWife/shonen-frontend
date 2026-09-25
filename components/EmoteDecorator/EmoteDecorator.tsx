@@ -1,11 +1,11 @@
 'use client';
 
-import { getEmotesData } from '@/common';
+import { getEmotesData, subscribeEmotesData } from '@/common';
 import { EmoteData } from '@/common/emotes';
 import { resolveEmoteToken } from '@/common/emoteResolver';
 import { effectAnimationMap, effectClassMap, wrapperClassMap } from '@/common/emotesEffects';
 import { cn } from '@/lib/utils';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useSyncExternalStore } from 'react';
 
 interface EmoteDecoratorProps {
     children: React.ReactNode;
@@ -18,7 +18,8 @@ interface EmoteDecoratorProps {
 const injectedKeyframeNames = new Set<string>();
 
 function EmoteDecorator({ children, emotesDataSSR, displaySize = 64 }: EmoteDecoratorProps) {
-    const emotesData: Record<string, EmoteData> = emotesDataSSR ?? getEmotesData();
+    const liveEmotesData = useSyncExternalStore(subscribeEmotesData, getEmotesData, getEmotesData);
+    const emotesData: Record<string, EmoteData> = emotesDataSSR ?? liveEmotesData;
 
     function createKeyframes(name: string, emote: any, gridSize: number, scaleFactor: number, displaySize: number) {
         const { frameCount, frameWidth, frameHeight, x, y } = emote;

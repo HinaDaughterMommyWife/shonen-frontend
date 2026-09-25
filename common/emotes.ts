@@ -34,6 +34,7 @@ export interface EmoteData {
 }
 
 let EMOTES_DATA: Record<string, EmoteData> = {};
+const listeners = new Set<() => void>();
 
 export function getEmotesData() {
   return EMOTES_DATA;
@@ -41,4 +42,10 @@ export function getEmotesData() {
 
 export function setEmotesData(data: Record<string, EmoteData>) {
   EMOTES_DATA = data;
+  listeners.forEach((listener) => listener());
+}
+
+export function subscribeEmotesData(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 }
