@@ -16,6 +16,8 @@ export default {
     extend: {
       fontFamily: {
         'great-fighter': ['var(--font-great-fighter)'],
+        'pixel': ['var(--font-pixel)'],
+        'ari-w9500': ['var(--font-ari-w9500)'],
       },
       screens: {
         xss: '320px',
@@ -85,6 +87,18 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         'spin-wave': {
           '0%': { transform: 'rotate(0deg)' },
           '10%': { transform: 'rotate(360deg)' },
@@ -100,9 +114,11 @@ export default {
         },
       },
       animation: {
+        blink: 'blink 0.7s step-end infinite',
         'spin-wave': 'spin-wave 4s linear infinite',
         'spin-orbit': 'spin-orbit 10s linear infinite',
         'slider-track': 'slider-track 20s linear infinite',
+        fadeIn: 'fadeIn 0.7s ease-out forwards',
       },
     },
   },

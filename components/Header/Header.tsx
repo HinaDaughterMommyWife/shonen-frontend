@@ -9,6 +9,9 @@ import { CountdownDisplay } from '../CountdownDisplay';
 import { useTextQueue } from '../../providers/TextQueueContext';
 import EmoteDecorator from '../EmoteDecorator';
 import { cn, isJSON } from '../../lib/utils';
+import MilestoneProgress from '../MilestoneProgress';
+import ElectionVsBar from '../ElectionVsBar';
+import { EmoteData } from '@/common/emotes';
 
 const ANIMATION_DURATION = 1500;
 
@@ -21,7 +24,13 @@ interface TextItem {
   totalMessages: number;
 }
 
-export default function Header() {
+export default function Header({
+  emotesData,
+  headerText = '',
+}: {
+  emotesData: Record<string, EmoteData>;
+  headerText?: string;
+}) {
   const { queue, enqueue } = useTextQueue();
 
   const [isSticky, setIsSticky] = useState(false);
@@ -67,7 +76,7 @@ export default function Header() {
     };
 
     ws.onerror = (error) => {
-      console.error('❌ Error en WebSocket:', error);
+      console.warn('❌ Error en WebSocket:', error);
     };
 
     ws.onclose = () => {
@@ -99,24 +108,7 @@ export default function Header() {
           <h2 className="scroll-m-20 border-b pb-2 text-4xl md:text-5xl font-light tracking-tight first:mt-0 font-great-fighter">
             El Shonen Semanal
           </h2>
-          <div className="mt-2">
-            <span className="font-semibold">
-              Ultimo Mensaje de Robraas (&nbsp;
-              <img
-                src={
-                  'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_0e109fdbe7394201924a2189264530aa/static/light/3.0'
-                }
-                alt={'pepelu'}
-                className="inline h-5 w-5 align-middle"
-                loading="lazy"
-              />{' '}
-              )<span className="text-xs text-gray-500">&nbsp;&nbsp;En tiempo real</span>
-              <span className="inline-flex items-center ml-2">
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500 animate-ping mr-1"></span>
-                <span className="absolute inline-flex h-2 w-2 rounded-full bg-red-500 opacity-75"></span>
-              </span>
-            </span>
-          </div>
+          {/* <span className='text-gray-500 text-sm mt-[10px]'>Ultimo Mensaje de Robraas:</span>
           <div className="relative w-full md:min-h-[70px] min-h-[120px] overflow-hidden flex items-center justify-center fade-vertical">
             {queue.map((item) => (
               <span
@@ -131,19 +123,12 @@ export default function Header() {
                 <EmoteDecorator displaySize={20}>{item.text}</EmoteDecorator>
               </span>
             ))}
-          </div>
-          <div
-            className={cn(
-              'flex justify-center opacity-0 transition-opacity duration-1000 ease-in-out',
-              {
-                'opacity-100': totalMessages !== 0,
-              },
-            )}
-          >
-              <span className="text-sm text-gray-500">
-                Total mensajes enviados por Robraas: {totalMessageString}
-              </span>
-          </div>
+          </div> */}
+          {headerText ? (
+            <EmoteDecorator displaySize={32} emotesDataSSR={emotesData}>
+              <span className="text-gray-500 text-[18px] mt-[10px]">{headerText}</span>
+            </EmoteDecorator>
+          ) : null}
         </div>
       </header>
     </>

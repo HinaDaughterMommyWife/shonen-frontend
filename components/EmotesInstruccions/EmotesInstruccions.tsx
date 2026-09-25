@@ -6,14 +6,15 @@ export default function EmotesInstruccions() {
             <span className="text-2xl font-bold text-yellow-500 coarse:block hidden">
                 Soporte para dispositivos táctiles.
             </span>
-            <span className="text-base font-bold text-gray-500">
-                <span className="hidden coarse:inline">Para seleccionar un emote, presiona el emote y se copiará al portapapeles.</span>
-                <span className="coarse:hidden inline">Para seleccionar un emote, haz click en el emote y se copiará al portapapeles.</span>
-            </span>
-            <span className="text-base font-bold text-gray-500">
-                <span className="hidden coarse:inline">Para editar un emote, mantén presionado el emote por unos segundos.</span>
-                <span className="coarse:hidden inline">Para editar un emote, presiona la tecla Z y luego haz click en el emote.</span>
-            </span>
+            <div className="flex flex-col gap-small items-center">
+                <span className="text-sm font-medium text-gray-500">
+                    <span className="hidden coarse:inline">Para seleccionar un emote, presiona el emote y se copiará al portapapeles.</span>
+                    <span className="coarse:hidden inline">Para seleccionar un emote, haz click en el emote y se copiará al portapapeles.</span>
+                </span>
+                <span className="text-sm font-medium text-gray-500">
+                    Para editar un emote, mantén presionado (click o toque) el emote por unos segundos.
+                </span>
+            </div>
         </div>
     );
 }

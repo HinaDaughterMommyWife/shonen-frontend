@@ -2,6 +2,7 @@
 
 import { getEmotesData } from '@/common';
 import { EmoteData } from '@/common/emotes';
+import { resolveEmoteToken } from '@/common/emoteResolver';
 import { effectAnimationMap, effectClassMap, wrapperClassMap } from '@/common/emotesEffects';
 import { cn } from '@/lib/utils';
 import React, { ReactElement } from 'react';
@@ -12,13 +13,12 @@ interface EmoteDecoratorProps {
     displaySize?: number;
 }
 
-export default function EmoteDecorator({ children, emotesDataSSR, displaySize = 64 }: EmoteDecoratorProps) {
+// Module-level cache: which @keyframes names have already been inserted into the
+// document, so repeated renders don't re-scan document.styleSheets[0].cssRules.
+const injectedKeyframeNames = new Set<string>();
+
+function EmoteDecorator({ children, emotesDataSSR, displaySize = 64 }: EmoteDecoratorProps) {
     const emotesData: Record<string, EmoteData> = emotesDataSSR ?? getEmotesData();
-    const twitchEmotesData = emotesData['twitch'];
-
-    const emoteKeyList = Object.keys(emotesData);
-
-    const specialEmoteNames = new Set(["o_o", "o_O", "O_O", "O_o"]);
 
     function createKeyframes(name: string, emote: any, gridSize: number, scaleFactor: number, displaySize: number) {
         const { frameCount, frameWidth, frameHeight, x, y } = emote;
@@ -28,11 +28,9 @@ export default function EmoteDecorator({ children, emotesDataSSR, displaySize = 
 
         const keyFrameName = `${name}-${displaySize}`;
 
+        if (injectedKeyframeNames.has(keyFrameName)) return;
+
         const styleSheet = document.styleSheets[0];
-        const exists = Array.from(styleSheet.cssRules).some(
-            rule => rule instanceof CSSKeyframesRule && rule.name === keyFrameName
-        );
-        if (exists) return;
 
         let keyframes = `@keyframes ${keyFrameName} {`;
         for (let i = 0; i < frameCount; i++) {
@@ -55,6 +53,7 @@ export default function EmoteDecorator({ children, emotesDataSSR, displaySize = 
         }
         keyframes += `}`;
         styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        injectedKeyframeNames.add(keyFrameName);
     }
 
     function transform(node: React.ReactNode): React.ReactNode {
@@ -71,51 +70,20 @@ export default function EmoteDecorator({ children, emotesDataSSR, displaySize = 
             let textBuffer = '';
 
             parts.forEach((part, index) => {
-                let baseName = '';
-                let effectKeysRaw: string[] = [];
+                const resolved = resolveEmoteToken(part, emotesData);
 
-                const tokens = part.split('_');
+                if (resolved) {
+                    const { baseName, emoteData, emote, effectKeys } = resolved;
+                    const isAnimated = 'animationDuration' in emote;
 
-                if (tokens.length >= 2 && specialEmoteNames.has(`${tokens[0]}_${tokens[1]}`)) {
-                    baseName = `${tokens[0]}_${tokens[1]}`;
-                    effectKeysRaw = tokens.slice(2);
-                } else {
-                    baseName = tokens[0];
-                    effectKeysRaw = tokens.slice(1);
-                }
+                    const effectClasses = effectKeys.map(key => effectClassMap[key]).filter(Boolean).join(' ');
+                    const animationFromEffect = effectKeys.map(key => effectAnimationMap[key]).filter(Boolean).join(', ');
+                    const wrapperClasses = effectKeys.map(key => wrapperClassMap[key]).filter(Boolean).join(' ');
 
-                const effectKeysSet = new Set<string>();
-                effectKeysRaw.forEach(key => {
-                    const upperKey = key.toUpperCase();
-                    if (effectClassMap[upperKey] || effectAnimationMap[upperKey] || wrapperClassMap[upperKey]) {
-                        effectKeysSet.add(upperKey);
-                    }
-                });
+                    const fileURL = isAnimated
+                        ? emoteData.filePaths.animated.fileURL
+                        : emoteData.filePaths.static.fileURL;
 
-                const effectClasses = Array.from(effectKeysSet)
-                    .map(key => effectClassMap[key])
-                    .filter(Boolean)
-                    .join(' ');
-
-                const animationFromEffect = Array.from(effectKeysSet)
-                    .map(key => effectAnimationMap[key])
-                    .filter(Boolean)
-                    .join(', ');
-
-                const wrapperClasses = Array.from(effectKeysSet)
-                    .map(key => wrapperClassMap[key])
-                    .filter(Boolean)
-                    .join(' ');
-
-                const emoteKey = emoteKeyList.find(key => baseName.startsWith(key));
-                const emoteData = emotesData[emoteKey ?? ''] || twitchEmotesData;
-                const emote = emoteData?.emotes[baseName];
-                const isAnimated = emote && 'animationDuration' in emote;
-                const fileURL = isAnimated
-                    ? emoteData?.filePaths.animated.fileURL
-                    : emoteData?.filePaths.static.fileURL;
-
-                if (emote) {
                     if (textBuffer) {
                         result.push(textBuffer);
                         textBuffer = '';
@@ -210,3 +178,5 @@ export default function EmoteDecorator({ children, emotesDataSSR, displaySize = 
 
     return <>{transform(children)}</>;
 }
+
+export default React.memo(EmoteDecorator);

@@ -183,7 +183,19 @@ export const MANGAS: Record<string, Manga> = {
   'yofukashi-no-uta': {
     id: 'yofukashi-no-uta',
     title: 'Yofukashi no Uta',
-    team: 'blue',
+    team: 'red',
     avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsisfOB2wG1J98GHE3QfMgVYoUpSFWqXwR72cl',
+  },
+  'dgray-man': {
+    id: 'dgray-man',
+    title: 'D.Gray-man',
+    team: 'blue',
+    avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBslUdWUjB5OpiVTzR1oDaUeb52IF7wXZmjAC39',
+  },
+  'ichi-the-witch': {
+    id: 'ichi-the-witch',
+    title: 'Ichi the Witch',
+    team: 'red',
+    avatar: 'https://p27kfbb298.ufs.sh/f/JxRqJXKVSRBsv9mJZ7yLbhI7ovQkEdBqiwycHRXDAgmW3M4u',
   },
 };

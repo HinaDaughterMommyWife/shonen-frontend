@@ -6,14 +6,18 @@ import StatsDisliked from '../StatsDisliked';
 import CommentSection from '../CommentSection';
 import { useStateManager } from '@/providers/StateManager';
 
-export default function SectionVoted() {
-  const { sectionPage } = useStateManager()
+type SectionVotedProps = {
+  pastebinMarkdown?: string;
+};
+
+export default function SectionVoted({ pastebinMarkdown = '' }: SectionVotedProps) {
+  const { sectionPage } = useStateManager();
 
   return (
     <div className="w-full min-h-[1400px]">
       {sectionPage === Section.LIKED && <StatsLiked />}
       {sectionPage === Section.DISLIKED && <StatsDisliked />}
-      {sectionPage === Section.COMMENT && <CommentSection />}
+      {sectionPage === Section.COMMENT && <CommentSection markdownContent={pastebinMarkdown} />}
     </div>
   );
 }

@@ -1,250 +1,219 @@
 'use client';
 import { EmoteData, setEmotesData } from '@/common/emotes';
-import EmoteDecorator from '../EmoteDecorator';
-import { useEffect, useRef, useState } from 'react';
+import { EMOTE_SEARCH_FILTERS_STORAGE_KEY } from '@/common/storageKeys';
+import { getLocalStorage, setLocalStorage } from '@/lib/localStorage';
+import { useLongPress } from '@/hooks/useLongPress';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import EmoteEditor from './EmoteEditor';
-import { addToLocalStorageLimited, getLocalStorageArray } from '@/lib/localStorage';
-import { useTouchLongPress } from '@/hooks/useTouchLongPress';
-import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
+import ChannelChipSelector, { ChannelOption } from './ChannelChipSelector';
+import EmoteSearchBar, { MIN_SEARCH_LENGTH } from './EmoteSearchBar';
+import ChannelEmoteSection from './ChannelEmoteSection';
+import EmoteHistorySection from './EmoteHistorySection';
+import { useEmoteHistory } from './useEmoteHistory';
+import { DEFAULT_ACTIVE_CHANNEL_KEYS } from '@/common/emoteChannelOrder';
+import { cn } from '@/lib/utils';
 
 interface EmotesShowcaseProps {
     emotesData: Record<string, EmoteData> | null;
 }
 
-export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
-    setEmotesData(emotesData ?? {});
+interface SearchFilters {
+    searchQuery: string;
+    chipSearchQuery: string;
+    activeChannelKeys: string[];
+}
 
-    const visibleRefs = useRef<Set<HTMLElement>>(new Set());
-    const wrapperRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-    const hoveredEmoteRef = useRef<HTMLElement | null>(null);
-    const zPressedRef = useRef(false);
+const EXCLUDED_SUBSTRINGS = ['Pit', 'Toes'];
+
+export default function EmotesShowcase({ emotesData }: EmotesShowcaseProps) {
+    const safeEmotesData = useMemo(() => emotesData ?? {}, [emotesData]);
+
+    useEffect(() => {
+        setEmotesData(safeEmotesData);
+    }, [safeEmotesData]);
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedEmoteName, setSelectedEmoteName] = useState<string | null>('');
-    const [emoteHistory, setEmoteHistory] = useState<string[]>([]);
-    const getLongPressHandlers = useTouchLongPress({
-        onLongPress: (emoteName) => {
-            setSelectedEmoteName(emoteName);
-            setDialogOpen(true);
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [chipSearchQuery, setChipSearchQuery] = useState('');
+    const [activeChannelKeys, setActiveChannelKeys] = useState<string[]>(DEFAULT_ACTIVE_CHANNEL_KEYS);
+    const [filtersHydrated, setFiltersHydrated] = useState(false);
+
+    const debouncedSearchQuery = useDebouncedValue(searchQuery, 300);
+
+    const { history, historyHydrated, addEntry, clearHistory } = useEmoteHistory(emotesData);
+
+    useEffect(() => {
+        const raw = getLocalStorage(EMOTE_SEARCH_FILTERS_STORAGE_KEY);
+        if (raw) {
+            try {
+                const parsed = JSON.parse(raw) as Partial<SearchFilters>;
+                setSearchQuery(parsed.searchQuery ?? '');
+                setChipSearchQuery(parsed.chipSearchQuery ?? '');
+                setActiveChannelKeys(parsed.activeChannelKeys ?? DEFAULT_ACTIVE_CHANNEL_KEYS);
+            } catch {
+                // ignore malformed persisted filters
+            }
+        }
+        setFiltersHydrated(true);
+    }, []);
+
+    // Everything client-only-hydrated (persisted filters + cleaned history) settles into
+    // state on mount across a couple of renders — showing content before that finishes
+    // means the user sees the default filters, then a jump to the persisted ones. Keep
+    // the content invisible until both are ready, then fade it in as one atomic reveal.
+    const ready = filtersHydrated && historyHydrated;
+
+    useEffect(() => {
+        if (!filtersHydrated) return;
+        const filters: SearchFilters = { searchQuery: debouncedSearchQuery, chipSearchQuery, activeChannelKeys };
+        setLocalStorage(EMOTE_SEARCH_FILTERS_STORAGE_KEY, JSON.stringify(filters));
+    }, [filtersHydrated, debouncedSearchQuery, chipSearchQuery, activeChannelKeys]);
+
+    const channels: ChannelOption[] = useMemo(
+        () => Object.entries(safeEmotesData).map(([key, data]) => ({ key, username: data.username })),
+        [safeEmotesData],
+    );
+
+    const channelSections = useMemo(() => {
+        const trimmed = debouncedSearchQuery.trim().toLowerCase();
+        const query = trimmed.length >= MIN_SEARCH_LENGTH ? trimmed : '';
+
+        // A search of 3+ letters looks across every channel and collapses the results
+        // into a single block, ignoring the channel chip filter entirely.
+        if (query) {
+            const seen = new Set<string>();
+            const emoteNames: string[] = [];
+
+            for (const data of Object.values(safeEmotesData)) {
+                for (const name of Object.keys(data.emotes)) {
+                    if (seen.has(name)) continue;
+                    if (EXCLUDED_SUBSTRINGS.some(s => name.includes(s))) continue;
+                    if (!name.toLowerCase().includes(query)) continue;
+                    seen.add(name);
+                    emoteNames.push(name);
+                }
+            }
+
+            return [{ key: '__search__', emoteNames }];
+        }
+
+        // No (usable) search text: the chip selection decides which channels show.
+        const sections: { key: string; emoteNames: string[] }[] = [];
+        for (const key of activeChannelKeys) {
+            const data = safeEmotesData[key];
+            if (!data) continue;
+            const emoteNames = Object.keys(data.emotes).filter(
+                name => !EXCLUDED_SUBSTRINGS.some(s => name.includes(s)),
+            );
+            sections.push({ key, emoteNames });
+        }
+
+        return sections;
+    }, [safeEmotesData, activeChannelKeys, debouncedSearchQuery]);
+
+    const copyEmote = useCallback((emoteName: string) => {
+        if ((window as any).stonks) {
+            (window as any).stonks.event(`emote-copied-${emoteName}`);
+        }
+        toast(`${emoteName} copiado al portapapeles.`, {
+            duration: 2000,
+            style: { background: '#333', color: '#fff' },
+        });
+        navigator.clipboard.writeText(emoteName);
+    }, []);
+
+    // Clicking a regular-panel emote copies it AND bumps it into history.
+    const handleShortPress = useCallback(
+        (emoteName: string) => {
+            copyEmote(emoteName);
+            addEntry(emoteName);
         },
+        [copyEmote, addEntry],
+    );
+
+    // Clicking a history emote only copies — it's already in history, re-adding it
+    // duplicates the entry instead of just moving it.
+    const handleHistoryShortPress = useCallback(
+        (emoteName: string) => {
+            copyEmote(emoteName);
+        },
+        [copyEmote],
+    );
+
+    const handleLongPress = useCallback((emoteName: string) => {
+        setSelectedEmoteName(emoteName);
+        setDialogOpen(true);
+    }, []);
+
+    const longPressHandlers = useLongPress({
+        onLongPress: handleLongPress,
+        onPress: handleShortPress,
         delay: 600,
     });
 
+    const historyLongPressHandlers = useLongPress({
+        onLongPress: handleLongPress,
+        onPress: handleHistoryShortPress,
+        delay: 600,
+    });
 
-    const emotesDataList = Object.values(emotesData ?? {}).map((emoteData) => ({
-        username: emoteData.username,
-        emotes: Object.entries(emoteData.emotes).map(([emoteName]) => emoteName),
-    }));
-
-    useEffect(() => {
-        const history = getLocalStorageArray('emoteHistory');
-        setEmoteHistory(history.slice(0, 20));
+    const handleToggleChannel = useCallback((key: string) => {
+        setActiveChannelKeys(prev => (prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]));
     }, []);
 
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const el = entry.target as HTMLElement;
-
-                    if (entry.isIntersecting) {
-                        visibleRefs.current.add(el);
-
-                        if (zPressedRef.current) {
-                            el.classList.remove('opacity-0', 'opacity-100');
-                            el.classList.add('opacity-20');
-                        } else {
-                            el.classList.remove('opacity-0', 'opacity-20');
-                            el.classList.add('opacity-100');
-                        }
-                    } else {
-                        visibleRefs.current.delete(el);
-                        el.classList.remove('opacity-100', 'opacity-20');
-                        el.classList.add('opacity-0');
-                    }
-                });
-            },
-            {
-                threshold: 0.05,
-            }
-        );
-
-        wrapperRefs.current.forEach((container) => {
-            container.querySelectorAll('span').forEach((span) => {
-                span.classList.add('opacity-0');
-                observer.observe(span);
-            });
-        });
-
-        return () => {
-            observer.disconnect();
-        };
+    const handleClearFilters = useCallback(() => {
+        setSearchQuery('');
+        setChipSearchQuery('');
+        setActiveChannelKeys(DEFAULT_ACTIVE_CHANNEL_KEYS);
     }, []);
-
-    useEffect(() => {
-        const applyOpacityOnVisible = (toZPressed: boolean) => {
-            visibleRefs.current.forEach((el) => {
-                if (toZPressed) {
-                    el.classList.remove('opacity-100', 'opacity-0');
-                    el.classList.add('opacity-20');
-                } else {
-                    el.classList.remove('opacity-20', 'opacity-0');
-                    el.classList.add('opacity-100');
-                }
-            });
-        };
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key.toLowerCase() === 'z' && !zPressedRef.current) {
-                zPressedRef.current = true;
-                applyOpacityOnVisible(true);
-                if (hoveredEmoteRef.current) {
-                    hoveredEmoteRef.current.classList.add('!opacity-100');
-                }
-            }
-        };
-
-        const handleKeyUp = (event: KeyboardEvent) => {
-            if (event.key.toLowerCase() === 'z' && zPressedRef.current) {
-                zPressedRef.current = false;
-                applyOpacityOnVisible(false);
-
-                if (hoveredEmoteRef.current) {
-                    hoveredEmoteRef.current.classList.remove('!opacity-100');
-                    hoveredEmoteRef.current = null;
-                }
-            }
-        };
-
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('keyup', handleKeyUp);
-        };
-    }, []);
-
-    const handleMouseEnter = (emoteEl: HTMLElement) => {
-        if (hoveredEmoteRef.current && hoveredEmoteRef.current !== emoteEl) {
-            hoveredEmoteRef.current.classList.remove('!opacity-100');
-        }
-        hoveredEmoteRef.current = emoteEl;
-
-        if (!zPressedRef.current) return;
-
-        emoteEl.classList.add('!opacity-100');
-    };
-
-    const handleMouseLeave = (emoteEl: HTMLElement) => {
-        if (!zPressedRef.current) {
-            hoveredEmoteRef.current = null;
-            return;
-        }
-
-        if (hoveredEmoteRef.current === emoteEl) {
-            emoteEl.classList.remove('!opacity-100');
-            hoveredEmoteRef.current = null;
-        }
-    };
-
-    const handleClickEmote = (emoteName: string, isHistory?: boolean) => {
-        if (zPressedRef.current) {
-            setSelectedEmoteName(emoteName);
-            setDialogOpen(true);
-        } else {
-            if ((window as any).stonks) {
-                (window as any).stonks.event(`emote-copied-${emoteName}`)
-            }
-            if (!isHistory) {
-                handleAddHistoryEmote(emoteName);
-            }
-            toast(`${emoteName} copiado al portapapeles.`, {
-                duration: 2000,
-                style: {
-                    background: "#333",
-                    color: "#fff",
-                },
-            })
-            navigator.clipboard.writeText(emoteName)
-        };
-    }
-
-    const handleAddHistoryEmote = (emoteName: string) => {
-        addToLocalStorageLimited('emoteHistory', emoteName);
-        setEmoteHistory((prev) => [emoteName, ...prev.slice(0, 19)]);
-    }
-
-    const emoteItemStyles = "cursor-pointer relative inline-flex items-center justify-center coarse:active:outline-none transition after:content-[''] after:absolute after:inset-0 after:rounded-full after:bg-gray-200/80 after:opacity-0 coarse:active:after:opacity-50 after:transition after:duration-200 after:pointer-events-none"
 
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <EmoteDecorator>
-                <div className="flex flex-col gap-medium w-full">
-                    {emoteHistory.length > 0 && (
-                        <div className="flex gap-medium justify-center py-2xlarge flex-col items-center min-h-[200px]">
-                            <h1 className="text-3xl font-bold uppercase ">Historial</h1>
-                            <div
-                                ref={(el) => {
-                                    if (el) {
-                                        wrapperRefs.current.set('emoteHistory', el);
-                                    }
-                                }}
-                                className="flex flex-wrap [&>*]:transition-opacity [&>*]:duration-300 w-full gap-small justify-center"
-                            >
-                                {emoteHistory.map((emoteName) => (
-                                    <span
-                                        key={emoteName}
-                                        onClick={() => handleClickEmote(emoteName, true)}
-                                        onMouseEnter={(e) => handleMouseEnter(e.currentTarget)}
-                                        onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
-                                        {...getLongPressHandlers(emoteName)}
-                                        className={emoteItemStyles}
-                                    >
-                                        {emoteName}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    {emotesDataList.map((emoteData) => (
-                        <div key={emoteData.username} className="flex flex-col gap-medium w-full">
-                            <div className="flex gap-medium justify-center py-2xlarge">
-                                <h1 className="text-3xl font-bold uppercase ">
-                                    {emoteData.username}
-                                </h1>
-                            </div>
-                            <div
-                                ref={(el) => {
-                                    if (el) {
-                                        wrapperRefs.current.set(emoteData.username, el);
-                                    }
-                                }}
-                                className="flex flex-wrap [&>*]:transition-opacity [&>*]:duration-300 w-full gap-small justify-center"
-                            >
-                                {emoteData.emotes.filter((emoteName) => !emoteName.includes('Pit') && !emoteName.includes('Toes')).map((emoteName) => (
-                                    <span
-                                        key={emoteName}
-                                        onClick={() => handleClickEmote(emoteName)}
-                                        onMouseEnter={(e) => handleMouseEnter(e.currentTarget)}
-                                        onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
-                                        {...getLongPressHandlers(emoteName)}
-                                        className={emoteItemStyles}>
-                                        {emoteName}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+            <div className={cn('flex flex-col gap-large w-full transition-opacity duration-300', ready ? 'opacity-100' : 'opacity-0')}>
+                <EmoteHistorySection
+                    emoteNames={history}
+                    emotesData={safeEmotesData}
+                    longPressHandlers={historyLongPressHandlers}
+                    onClearHistory={clearHistory}
+                />
+
+                <ChannelChipSelector
+                    channels={channels}
+                    activeKeys={activeChannelKeys}
+                    onToggleChannel={handleToggleChannel}
+                    chipSearchQuery={chipSearchQuery}
+                    onChipSearchQueryChange={setChipSearchQuery}
+                    ready={ready}
+                />
+
+                <EmoteSearchBar
+                    searchQuery={searchQuery}
+                    onSearchQueryChange={setSearchQuery}
+                    onClearFilters={handleClearFilters}
+                />
+
+                <div className="flex flex-col w-full min-h-[568px]">
+                    {channelSections.map(({ key, emoteNames }) => (
+                        <ChannelEmoteSection
+                            key={key}
+                            emoteNames={emoteNames}
+                            emotesData={safeEmotesData}
+                            longPressHandlers={longPressHandlers}
+                        />
                     ))}
                 </div>
-            </EmoteDecorator>
+            </div>
+
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Añadir efectos a {selectedEmoteName}</DialogTitle>
                 </DialogHeader>
-                <EmoteEditor emoteName={selectedEmoteName ?? ''} handleAddHistoryEmote={handleAddHistoryEmote} />
+                <EmoteEditor emoteName={selectedEmoteName ?? ''} emotesData={safeEmotesData} handleAddHistoryEmote={addEntry} />
             </DialogContent>
         </Dialog>
     );

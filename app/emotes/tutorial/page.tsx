@@ -1,5 +1,5 @@
 import EmoteDecorator from "@/components/EmoteDecorator";
-import { EmoteData } from "@/common/emotes";
+import { EMOTES_TUTORIAL_IMAGE_URL, EmoteData } from "@/common/emotes";
 import { unpack } from "msgpackr";
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ export default async function Home() {
     try {
 
         const resEmotedDataBuffer = await fetch(
-            "https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2"
+            EMOTES_TUTORIAL_IMAGE_URL
             , {
                 next: { revalidate: 3600, tags: ['emoteData'] }
             })

@@ -4,10 +4,16 @@ interface Manga {
   [key: string]: number;
 }
 
+export interface SelectedCommentObject {
+  comment: string;
+  favorite_chapter: string;
+  least_favorite_chapter: string;
+}
+
 export interface SurveyResponse {
   favorite_chapters: Manga;
   least_favorite_chapters: Manga;
-  selectedComments: string[];
+  selectedComments: string[] | SelectedCommentObject[];
 }
 
 export interface CloudInterface {

@@ -1,23 +1,25 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDvd } from '@/providers/DvdSettings';
+import { cn } from '../../lib/utils';
 
 interface DvdBounceProps {
     imgSrc: string;
     onSideBounce?: () => void;
     onDVDClick?: () => void;
+    dvdClass?: string;
+    moveOnRender?: boolean;
 }
 
-const DvdBounce: React.FC<DvdBounceProps> = ({ imgSrc, onSideBounce, onDVDClick }) => {
+const DvdBounce: React.FC<DvdBounceProps> = ({ imgSrc, onSideBounce, onDVDClick, dvdClass, moveOnRender = false }) => {
     const refEl = useRef<HTMLDivElement>(null);
     const animRef = useRef<number>(0);
-
 
     const docPosRef = useRef({ x: 0, y: 0 });
     const velocity = useRef({ x: 2, y: 2 });
     const position = useRef({ x: 0, y: 0 });
     const { speed, opacity, setEnabled } = useDvd();
 
-    const [isMoving, setIsMoving] = useState(false);
+    const [isMoving, setIsMoving] = useState(moveOnRender);
     const [renderPos, setRenderPos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
@@ -88,6 +90,13 @@ const DvdBounce: React.FC<DvdBounceProps> = ({ imgSrc, onSideBounce, onDVDClick 
         }, 3000);
     };
 
+    useEffect(() => {
+        if (moveOnRender) {
+            setIsMoving(true);
+            setEnabled(true);
+            animRef.current = requestAnimationFrame(animate);
+        }
+    }, [moveOnRender]);
 
     useEffect(() => {
         const onResize = () => {
@@ -114,6 +123,7 @@ const DvdBounce: React.FC<DvdBounceProps> = ({ imgSrc, onSideBounce, onDVDClick 
             <div
                 ref={refEl}
                 onClick={handleClick}
+                className={cn(dvdClass)}
                 style={{
                     width: 100,
                     height: 100,

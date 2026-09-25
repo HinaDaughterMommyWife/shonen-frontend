@@ -40,3 +40,7 @@ export function getLocalStorageArray(key: string) {
     return [];
   }
 }
+
+export function setLocalStorageArray(key: string, value: unknown[]) {
+  setLocalStorage(key, JSON.stringify(value));
+}

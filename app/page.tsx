@@ -1,19 +1,33 @@
 import { URLS } from '@/common';
-import { EmoteData } from '@/common/emotes';
+import { EMOTES_TUTORIAL_IMAGE_URL, EmoteData } from '@/common/emotes';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import TopWindow from '@/components/TopWindow';
-import { DvdProvider } from '@/providers/DvdSettings';
 import StateManagerProvider from '@/providers/StateManager';
-import { Section, useSectionStore } from '@/store';
+import { Section } from '@/store';
 import { HistoricalResponse } from '@/store/historical';
 import { CloudInterface, SurveyResponse } from '@/store/survey';
+import { fetchFirstOkText } from '@/lib/fetchPastebin';
 import { unpack } from 'msgpackr';
 import { TextQueueProvider } from '../providers/TextQueueContext';
 
 interface SearchParams {
   section: string;
 }
+
+const PASTEBIN_REVALIDATE = process.env.NODE_ENV === 'development' ? 3 : 30;
+
+/** Header subtitle — first OK wins; add more mirrors for failover. */
+const PASTEBIN_HEADER_URLS = [
+  'https://pastebin.com/raw/DDKHUA5V',
+  // 'https://pastebin.com/raw/BACKUP_ID',
+];
+
+/** Comment markdown — independent of header; first OK wins. */
+const PASTEBIN_MARKDOWN_URLS = [
+  'https://pastebin.com/raw/BdyMKKKF',
+  // 'https://pastebin.com/raw/BACKUP_ID',
+];
 
 export default async function Home({ searchParams }: { searchParams: Promise<SearchParams> }) {
   let dataSurvey: SurveyResponse;
@@ -23,6 +37,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
   let dataHistorical: HistoricalResponse;
 
   let emoteData: Record<string, EmoteData>;
+  let pastebinMarkdown = '';
+  let pastebinHeaderText = '';
 
   try {
     const resSurvey = await fetch(URLS.API + '/survey/lastKey', {
@@ -43,7 +59,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
     dataExperimental = await resExperimental.json();
 
     const resEmotedDataBuffer = await fetch(
-      'https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2',
+      EMOTES_TUTORIAL_IMAGE_URL,
       {
         next: { revalidate: 3600, tags: ['emoteData'] },
       },
@@ -77,6 +93,17 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
     emoteData = {};
   }
 
+  const [headerResult, markdownResult] = await Promise.all([
+    fetchFirstOkText(PASTEBIN_HEADER_URLS, {
+      next: { revalidate: PASTEBIN_REVALIDATE, tags: ['pastebin-header'] },
+    }),
+    fetchFirstOkText(PASTEBIN_MARKDOWN_URLS, {
+      next: { revalidate: PASTEBIN_REVALIDATE, tags: ['pastebin-markdown'] },
+    }),
+  ]);
+  pastebinHeaderText = headerResult;
+  pastebinMarkdown = markdownResult;
+
   const params = await searchParams;
 
   const section = (params.section || Section.LIKED) as Section;
@@ -84,15 +111,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
   return (
     <StateManagerProvider initialSection={section}>
       <TextQueueProvider>
-          <Header />
-          <Main
-            historicalData={dataHistorical}
-            surveyData={dataSurvey}
-            responseStatus={statusData}
-            experimentalData={dataExperimental}
-            emotesData={emoteData}
-          />
-          <TopWindow />
+        <Header emotesData={emoteData} headerText={pastebinHeaderText} />
+        <Main
+          historicalData={dataHistorical}
+          surveyData={dataSurvey}
+          responseStatus={statusData}
+          experimentalData={dataExperimental}
+          emotesData={emoteData}
+          pastebinMarkdown={pastebinMarkdown}
+        />
+        <TopWindow />
       </TextQueueProvider>
     </StateManagerProvider>
   );

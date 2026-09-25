@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function Luis() {
     const { ref, inView } = useInView<HTMLDivElement>({
         once: true,
-        distance: 100
+        offset: 100
     })
 
     let timeout: NodeJS.Timeout;

@@ -1,0 +1,255 @@
+/* Shared markdown preview — plain CSS (Quill ql-* must not rely on Tailwind). */
+
+.markdown-preview {
+  --mp-muted: hsl(240 5% 64.9%);
+  --mp-fg: hsl(0 0% 95%);
+  color: var(--mp-fg);
+  line-height: 1.6;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  /* Stay inside parent — never spill horizontally */
+  overflow-x: hidden;
+  /* Prefer phrase/sentence wrapping; break a word only if that word > line width */
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+.markdown-preview *,
+.markdown-preview *::before,
+.markdown-preview *::after {
+  box-sizing: border-box;
+}
+
+/* Block-level only — never put max-width on inline strong/em (causes glyph wrap) */
+.markdown-preview p,
+.markdown-preview li,
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview div,
+.markdown-preview pre,
+.markdown-preview blockquote,
+.markdown-preview ul,
+.markdown-preview ol,
+.markdown-preview img,
+.markdown-preview .tweet-embed {
+  max-width: 100%;
+}
+
+.markdown-preview .md-preview-p {
+  margin: 0 0 0.75em;
+  font-size: 1.25rem;
+  /* normal = wrap at spaces; intentional breaks come from <br /> */
+  white-space: normal;
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.markdown-preview .md-preview-li {
+  margin: 0.35em 0;
+  white-space: normal;
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4 {
+  margin: 0.6em 0 0.35em;
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.markdown-preview h1 {
+  font-size: 2rem;
+}
+
+.markdown-preview h2 {
+  font-size: 1.65rem;
+}
+
+.markdown-preview h3 {
+  font-size: 1.35rem;
+}
+
+/*
+ * strong/em must wrap BETWEEN words, not glyph-by-glyph.
+ * overflow-wrap: normal here = only soft-wrap at spaces inside the run;
+ * the parent still has break-word for a single ultra-long token.
+ */
+.markdown-preview em,
+.markdown-preview .md-preview-em,
+.markdown-preview strong,
+.markdown-preview .md-preview-strong,
+.markdown-preview u,
+.markdown-preview .md-preview-u,
+.markdown-preview del,
+.markdown-preview .md-preview-del {
+  display: inline;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.markdown-preview em,
+.markdown-preview .md-preview-em {
+  font-style: italic;
+  font-synthesis: style;
+}
+
+.markdown-preview strong,
+.markdown-preview .md-preview-strong {
+  font-weight: 700;
+  font-synthesis: weight;
+}
+
+.markdown-preview u,
+.markdown-preview .md-preview-u {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-preview del,
+.markdown-preview .md-preview-del {
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+.markdown-preview code,
+.markdown-preview .md-preview-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: hsl(240 3.7% 15.9%);
+}
+
+.markdown-preview .md-spoiler {
+  background: currentColor;
+  border-radius: 3px;
+  color: transparent;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.markdown-preview .md-spoiler:hover,
+.markdown-preview .md-spoiler:focus {
+  background: hsl(240 3.7% 20%);
+  color: inherit;
+}
+
+.markdown-preview .md-preview-ol,
+.markdown-preview .md-preview-ul {
+  margin: 1em 0;
+  padding-left: 1.25em;
+  font-size: 1.15rem;
+}
+
+.markdown-preview .md-preview-ol {
+  list-style: decimal;
+}
+
+.markdown-preview .md-preview-ul {
+  list-style: disc;
+}
+
+.markdown-preview .md-preview-link {
+  color: #3b82f6;
+  text-decoration: underline;
+  /* URLs may still need to break — words in body text do not */
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.markdown-preview .md-preview-img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border-radius: 4px;
+}
+
+.markdown-preview .md-preview-img[width] {
+  height: auto;
+}
+
+.markdown-preview .md-preview-draft-hint {
+  margin: 0 0 0.5em;
+  font-size: 0.75rem;
+  color: var(--mp-muted, #999);
+  font-style: italic;
+}
+
+.markdown-preview--draft .md-preview-p {
+  opacity: 0.85;
+}
+
+.markdown-preview .ql-size-small {
+  font-size: 0.75em;
+}
+
+.markdown-preview .ql-size-large {
+  font-size: 1.5em;
+}
+
+.markdown-preview .ql-size-huge {
+  font-size: 2.5em;
+}
+
+.markdown-preview .ql-align-center,
+.markdown-preview p.ql-align-center,
+.markdown-preview h1.ql-align-center,
+.markdown-preview h2.ql-align-center,
+.markdown-preview h3.ql-align-center {
+  text-align: center !important;
+}
+
+.markdown-preview .ql-align-right,
+.markdown-preview p.ql-align-right {
+  text-align: right !important;
+}
+
+.markdown-preview .ql-align-left,
+.markdown-preview p.ql-align-left {
+  text-align: left !important;
+}
+
+.markdown-preview .ql-align-justify,
+.markdown-preview p.ql-align-justify {
+  text-align: justify !important;
+}
+
+/* Twitter / X embed wrappers */
+.markdown-preview .tweet-embed {
+  display: flex;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.markdown-preview .tweet-embed--start {
+  justify-content: flex-start;
+}
+
+.markdown-preview .tweet-embed--center {
+  justify-content: center;
+}
+
+.markdown-preview .tweet-embed--end {
+  justify-content: flex-end;
+}
+
+.markdown-preview .tweet-embed .twitter-tweet {
+  margin: 0 !important;
+}

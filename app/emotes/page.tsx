@@ -1,4 +1,5 @@
-import { EmoteData } from '@/common/emotes';
+import { EMOTES_TUTORIAL_IMAGE_URL, EmoteData } from '@/common/emotes';
+import EmoteDecorator from '@/components/EmoteDecorator';
 import EmotesInstruccions from '@/components/EmotesInstruccions/EmotesInstruccions';
 import EmotesShowcase from '@/components/EmotesShowcase/EmotesShowcase';
 import { unpack } from 'msgpackr';
@@ -11,7 +12,7 @@ export default async function Home() {
 
     try {
         const resEmotedDataBuffer = await fetch(
-            "https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JbvgMSzjQpmVDajoTKMhYsuXt5kAZ6gSGelr2"
+            EMOTES_TUTORIAL_IMAGE_URL
             , {
                 next: { revalidate: 3600, tags: ['emoteData'] }
             })
@@ -25,7 +26,7 @@ export default async function Home() {
     }
 
     return (
-        <div className="flex mx-[10%] flex-col gap-medium">
+        <div className="flex flex-col gap-medium mx-small sm:mx-large md:mx-xlarge lg:mx-[10%]">
             <div className="w-full flex justify-center py-large">
                 <h2 className="text-3xl font-bold">Listado de Emotes</h2>
             </div>

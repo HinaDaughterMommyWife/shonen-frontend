@@ -30,7 +30,7 @@ function formatParts({
   if (minutes > 0 || parts.length > 0) parts.push(`${pad(minutes)} Minutos`);
   if (seconds > 0 || parts.length > 0) parts.push(`${pad(seconds)} Segundos`);
 
-  if (milliseconds > 0 || parts.length > 0) parts.push(`${pad(milliseconds, 3)} ms`);
+  // if (milliseconds > 0 || parts.length > 0) parts.push(`${pad(milliseconds, 3)} ms`);
 
   if (parts.length === 0) return '0 ms';
 

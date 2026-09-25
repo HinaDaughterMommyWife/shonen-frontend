@@ -1,3 +1,6 @@
+export const EMOTES_TUTORIAL_IMAGE_URL =
+  'https://8oyqmsgy9y.ufs.sh/f/ajOhhXLQGf1JG1bzvnEYs8zrLblxqWZUc1gm59uSvi2TjQe0';
+
 interface EmoteFile {
   fileURL: string;
   gridSize: number;
@@ -22,7 +25,7 @@ interface AnimatedEmote extends StaticEmote {
   animationDuration: number;
 }
 
-type Emote = StaticEmote | AnimatedEmote;
+export type Emote = StaticEmote | AnimatedEmote;
 
 export interface EmoteData {
   username: string;
